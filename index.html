@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UXtra</title>
+	<script>
+		function setCookie(name, val) {
+            var date = new Date();
+            date.setTime(date.getTime() + (60*60*1000));
+            var expires = "expires="+ date.toUTCString();
+			document.cookie=name + "=" + val + ";" + expires + ";path=/; + secure";
+        }
+        function storeVals(form) {
+			setCookie("uname",JSON.stringify(form.uname.value));
+			setCookie("pass",JSON.stringify(form.pass.value));
+        }
+	</script>
+</head>
+<body>
+
+	<h1>UXtra</h1>
+
+	<form id="login" onsubmit="storeVals(this)">
+		Username: <br> <input type="text" name="username" id="uname"> <br> <br>
+		Password: <br> <input type="password" name="password" id="pass"> <br> <br>
+		<input type="submit" value="LOG IN">
+	</form>
+
+</body>
+</html>
