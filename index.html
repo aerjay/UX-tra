@@ -10,8 +10,28 @@
 			document.cookie=name + "=" + val + ";" + expires + ";path=/; + secure";
         }
         function storeVals(form) {
-			setCookie("uname",JSON.stringify(form.uname.value));
-			setCookie("pass",JSON.stringify(form.pass.value));
+		    //must check if login
+			if(form.id.toString() === "login") {
+                setCookie("uname", JSON.stringify(form.luname.value));
+                setCookie("pass", JSON.stringify(form.lpass.value));
+            }
+            else {
+                //or sign up
+				let passion = "";
+                let radio = document.getElementsByName("passion");
+                for(let i=0; i < radio.length; i++){
+                    if(radio[i].checked){
+                        passion = radio[i].value;
+                        break;
+					}
+				}
+                setCookie("fname", JSON.stringify(form.fname.value));
+                setCookie("lname", JSON.stringify(form.lname.value));
+                setCookie("uname", JSON.stringify(form.suname.value));
+                setCookie("pass", JSON.stringify(form.spass.value));
+                setCookie("email", JSON.stringify(form.email.value));
+                setCookie("passion", JSON.stringify(passion));
+            }
         }
 	</script>
 </head>
@@ -20,9 +40,22 @@
 	<h1>UXtra</h1>
 
 	<form id="login" onsubmit="storeVals(this)">
-		Username: <br> <input type="text" name="username" id="uname"> <br> <br>
-		Password: <br> <input type="password" name="password" id="pass"> <br> <br>
+		Username: <br> <input type="text" name="username" id="luname"> <br> <br>
+		Password: <br> <input type="password" name="password" id="lpass"> <br> <br>
 		<input type="submit" value="LOG IN">
+	</form>
+
+	<br>
+
+	<form id="signup" onsubmit="storeVals(this)">
+		First Name: <br> <input type="text" name="firstname" id="fname"> <br> <br>
+		Last Name: <br> <input type="text" name="lastname" id="lname"> <br> <br>
+		Username: <br> <input type="text" name="username" id="suname"> <br> <br>
+		Password: <br> <input type="password" name="password" id="spass"> <br> <br>
+		Email: <br> <input type="email" name="ename" id="email"> <br> <br>
+		<input type="radio" name="passion" value="designer"> Designer<br>
+		<input type="radio" name="passion" value="enthusiast"> Enthusiast<br>
+		<input type="submit" value="SIGN UP">
 	</form>
 
 </body>
