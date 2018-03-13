@@ -3,13 +3,17 @@ var express = require('express');
 //var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
+    .then(() =>  console.log('db: connection successful'))
+    .catch((err) => console.error(err));
 
 // make a new application
 var app = express();
-var monngo = require('mongodb');
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
-
 
 app.use (cookieParser());
 
@@ -58,16 +62,4 @@ app.get ('/', function(req, res) {
 
 app.listen(3000,function(){
     console.log('sample app listening on port 3000!');
-});
-
-
-MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("mydb");
-    var myobj = { name: "Company Inc", address: "Highway 37" };
-    dbo.collection("customers").insertOne(myobj, function(err, res) {
-        if (err) throw err;
-        console.log("1 document inserted");
-        db.close();
-    });
 });
