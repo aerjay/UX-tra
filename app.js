@@ -27,7 +27,15 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-    
+   
+// this code exactly follows the site
+// https://www.djamware.com/post/58bd823080aca7585c808ebf/nodejs-expressjs-mongoosejs-and-passportjs-authentication
+// to add passport configuration
+
+let User = require('./models/user');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser())
 
 //The below is commented out as we will not be using this part for authentication anymore. 
 /* app.get ('/', function(req, res) {
@@ -44,6 +52,7 @@ app.use(passport.session());
         userName = JSON.stringify(logIn["uname"]);
         password = JSON.stringify(logIn["pass"]);
         }
+        
     //authenication of user
     let defaultUser = JSON.stringify("admin");
     let defaultPass = JSON.stringify("1234");
