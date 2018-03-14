@@ -12,12 +12,25 @@ mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
     .then(() =>  console.log('db: connection successful'))
     .catch((err) => console.error(err));
 
+//Use this space to indicate routes
+
 // make a new application
 var app = express();
 
-app.use (cookieParser());
 
-app.get ('/', function(req, res) {
+//'app.use' section of the file 
+//app.use (cookieParser());
+app.use(require('express-session')({
+    secret: 'keke',
+    resave: false, 
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+    
+
+//The below is commented out as we will not be using this part for authentication anymore. 
+/* app.get ('/', function(req, res) {
     //we have to go to home page first = log in screen
     res.sendFile('index.html', {root: __dirname});
     // check existing cookies
@@ -56,10 +69,9 @@ app.get ('/', function(req, res) {
         res.clearCookie("passion");
         res.clearCookie("email");
     }
-});
+}); */
 
 
 
 app.listen(3000,function(){
     console.log('sample app listening on port 3000!');
-});
