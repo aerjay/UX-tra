@@ -7,11 +7,27 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let passportLocalMongoose = require('passport-local-mongoose');
 
-let UserSchema = new Schema({
+let schema = new Schema({
+    fullname: String,
+    title: String,
     username: String,
-    password: String
+    password: String,
+    project: {data: Buffer, header: String}
 });
 
-UserSchema.plugin(passportLocalMongoose);
+var options = {
+	errorMessages: {
+		MissingPasswordError: 'No password was given',
+        AttemptTooSoonError: 'Account is currently locked. Try again later',
+        TooManyAttemptsError: 'Account locked due to too many failed login attempts',
+        NoSaltValueStoredError: 'Authentication not possible. No salt value stored',
+        IncorrectPasswordError: 'Password or username are incorrect',
+        IncorrectUsernameError: 'Password or username are incorrect',
+        MissingUsernameError: 'No username was given',
+        UserExistsError: 'A user with the given username is already registered'
+	}
+};
 
-module.exports = mongoose.model('User', UserSchema);
+schema.plugin(passportLocalMongoose, options);
+
+module.exports = mongoose.model('User', schema);

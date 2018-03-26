@@ -1,86 +1,63 @@
-// imports
+var createError = require('http-errors');
 var express = require('express');
-//var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
+var session = require('express-session');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var Router = require('./routes/route');
+var bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
-    .then(() =>  console.log('db: connection successful'))
-    .catch((err) => console.error(err));
+	.then(() =>  console.log("db: connection successful"))
+	.catch((err) => console.error(err));
 
-//Use this space to indicate routes
-
-// make a new application
 var app = express();
 
+// view engine setup
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
-//'app.use' section of the file 
-//app.use (cookieParser());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(require('express-session')({
-    secret: 'keke',
-    resave: false, 
-    saveUninitialized: false
+	secret: 'userexperience',
+	resave: false,
+	saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-   
-// this code exactly follows the site
-// https://www.djamware.com/post/58bd823080aca7585c808ebf/nodejs-expressjs-mongoosejs-and-passportjs-authentication
-// to add passport configuration
 
-let User = require('./models/user');
+//added the db
+var User = require('./models/User');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser())
+passport.deserializeUser(User.deserializeUser());
 
-//The below is commented out as we will not be using this part for authentication anymore. 
-/* app.get ('/', function(req, res) {
-    //we have to go to home page first = log in screen
-    res.sendFile('index.html', {root: __dirname});
-    // check existing cookies
-    console.log("Cookies :  ", req.cookies);
-//
-    var logIn = cookieParser.JSONCookies(req.cookies);
+app.use('/', Router);
 
-    let userName ="";
-    let password = "";
-    if (logIn.length !== 0) {
-        userName = JSON.stringify(logIn["uname"]);
-        password = JSON.stringify(logIn["pass"]);
-        }
-        
-    //authenication of user
-    let defaultUser = JSON.stringify("admin");
-    let defaultPass = JSON.stringify("1234");
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+	next(createError(404));
+});
 
-    if((userName === defaultUser) && (password === defaultPass)){
-        console.log("succ");
-    }
-    //if the user is allowed then redirect
-    //else go to login
+// error handler
+app.use(function(err, req, res, next) {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+	// render the error page
+	res.status(err.status || 500);
+	// res.render('error');
+});
 
-    // set a new cookie that will last 1 hr
-    //   res.cookie ("user", "bob", { maxAge: 60 * 60 * 1000 });
-
-
-    //check if user logs out
-    // clear a cookie (logout)
-    res.clearCookie("uname");
-    res.clearCookie("pass");
-    if(logIn.length != 2) {
-        res.clearCookie("fname");
-        res.clearCookie("lname");
-        res.clearCookie("passion");
-        res.clearCookie("email");
-    }
-}); */
-
-
-
-app.listen(3000,function(){
-    console.log('sample app listening on port 3000!');
+module.exports = app;

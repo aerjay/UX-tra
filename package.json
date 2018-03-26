@@ -1,25 +1,22 @@
 {
-  "name": "ux-tra",
-  "version": "1.0.0",
-  "description": "web application for ux designers",
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aerjay/UX-tra.git"
+  "name": "uxtra",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
   },
-  "authors": "Edrienne Manalastas, Eve Chen, Rey Jr. Italia, William Hong",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aerjay/UX-tra/issues"
-  },
-  "homepage": "https://github.com/aerjay/UX-tra#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.16.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "^2.5.7",
+    "express": "^4.16.3",
+    "express-flash": "0.0.2",
     "express-session": "^1.15.6",
-    "mongodb": "^3.0.2",
-    "mongoose": "^5.0.10",
+    "http-errors": "~1.6.2",
+    "mongoose": "^5.0.11",
+    "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.0"
