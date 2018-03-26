@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		var un = "<%=data%>"
+//		console.log(data);
+//    		var un = data;
+    		un  = '<li>' + '<span>' + un + '</span>' + '</li>';
+			$('#users').append(un);
+	});
+	</script>
+</head>
+<body>
+
+	<h1>UXtra</h1>
+	<ul id="users">
+        
+    </ul>
+</body>
+</html>
