@@ -9,22 +9,25 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
 </head>
 <body>
-
 	<div id="banner" class="container-fluid">
 		<nav id="topbar" class="sticky-top">
 			<h1 id="logo">UXTRA</h1>
 		</nav>
-
 		<div id="banner-content" class="container-fluid row mx-auto">
 			<!-- Title -->
 			<span class="col-xl-5 col-12">
 				<h1 id="banner-title">COLLABORATE POWERFULLY WITH YOUR MARKET</h1>
 			</span>
-
 			<span class="col-xl-2 d-none d-xl-block"></span>
 
 			<!-- Sign Up Form -->
 			<div class="col-xl-5 col-12 ">
+				<% if (error.length > 0) { %>
+						<div class="alert alert-danger"><%= error %></div>
+				<% } %>
+				<% if (succ.length > 0) { %>
+						<div class="alert alert-success"><%= succ %></div>
+				<% } %>
 				<form action="/login" method="post">
 					<div class="form-group mx-auto">
 						<label class="form-title">LOG IN TO UXTRA</label>

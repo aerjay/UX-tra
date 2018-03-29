@@ -10,8 +10,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var Router = require('./routes/route');
 var bodyParser = require('body-parser');
 var fileupload = require("express-fileupload");
-//var busboy  = require('connect-busboy');
-//var busboyBodyParser = require('busboy-body-parser');
+var flash    = require('connect-flash');
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
 	.then(() =>  console.log("db: connection successful"))
@@ -19,18 +19,13 @@ mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
 
 var app = express();
 
-// view engine setup
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileupload({ limits: { filesize: 15 * 1024 *1024}, safeFileNames: true, preserveExtension: true, abortOnLimit: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(flash()); 
 app.use(require('express-session')({
 	secret: 'userexperience',
 	resave: false,
@@ -45,6 +40,9 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// view engine setup
+app.set('view engine', 'ejs'); 
+app.set('views', __dirname + '/views');
 app.use('/', Router);
 
 // catch 404 and forward to error handler
