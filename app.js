@@ -9,7 +9,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Router = require('./routes/route');
 var bodyParser = require('body-parser');
-
+var fileupload = require("express-fileupload");
+//var busboy  = require('connect-busboy');
+//var busboyBodyParser = require('busboy-body-parser');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
 	.then(() =>  console.log("db: connection successful"))
@@ -25,6 +27,7 @@ app.set('views', __dirname + '/views');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(fileupload({ limits: { filesize: 15 * 1024 *1024}, safeFileNames: true, preserveExtension: true, abortOnLimit: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

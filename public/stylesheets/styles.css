@@ -19,16 +19,29 @@ html, body {
 	width: 100vw;
 	color: #FAFAFA;
 	font-family: 'Nunito', 'Helvetica', 'sans-serif';
+	overflow: hidden;
 }
 
-html, body, #sidebar, .navbar-nav {
+html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	margin: 0;
 	padding: 0;
 }
 
-/* All the different navs and bars */
-#sidebar, #bottombar, #topbar {
+/* All the colours */
+.colour-primary, .colour-primary:hover {
 	background-color: #3F3F3F;
+}
+
+.colour-accent, .colour-accent:hover {
+	background-color: #5FBABF;
+}
+
+.hover-primary:hover {
+	background-color: #666;
+}
+
+.hover-accent:hover {
+	background-color: #5FBABF;
 }
 
 /* ********** */
@@ -50,6 +63,7 @@ html, body, #sidebar, .navbar-nav {
 #topbar {
 	text-align: center;
 	padding: 1.6vh 1vw;
+	background-color: #3F3F3F;
 }
 
 #topbar #logo {
@@ -71,10 +85,26 @@ html, body, #sidebar, .navbar-nav {
 	letter-spacing: 1px;
 }
 
+/* Consistent Button! */
+.btn {
+	padding: 8px 16px;
+	font-size: 1.1em;
+	background-color: #3F3F3F;
+	color: #FAFAFA;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	border-radius: 6px;
+}
+
+.btn:hover {
+	background-color: #666;
+	border: 1px solid #3F3F3F;
+}
+
 /* Form */
-.form-group {
-	background-color: #FAFAFA;
+#banner .form-group {
 	color: #3F3F3F;
+	background-color: #FAFAFA;
 	padding: 2vh 2vw;
 	max-width: 32vw;
 	border-radius: 6px;
@@ -98,7 +128,6 @@ html, body, #sidebar, .navbar-nav {
 	border: 1px solid #666;
 	margin-bottom: 8px;
 	padding: 10px;
-	/*background-color: rgba(250, 250, 250, 0.6);*/
 }
 
 .form-check-label {
@@ -123,27 +152,11 @@ html, body, #sidebar, .navbar-nav {
 	float: right;
 }
 
-/* Consistent Button! */
-.btn {
-	padding: 8px 16px;
-	font-size: 1.1em;
-	background-color: #3F3F3F;
-	color: #FAFAFA;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	border-radius: 6px;
-}
-
-.btn:hover {
-	background-color: #666;
-	border: 1px solid #3F3F3F;
-}
-
 /* Modals */
 .modal-content {
-	border-radius: 0;
-	border: 1px solid #3F3F3F;
 	margin: auto;
+	border: 1px solid #3F3F3F;
+	border-radius: 0 !important;
 }
 
 .modal {
@@ -248,6 +261,17 @@ html, body, #sidebar, .navbar-nav {
 	width: 100%;
 }
 
+.active {
+	border-left: 3px solid #FAFAFA;
+}
+
+@media only screen and (max-width: 992px) {
+	.active {
+		border: none;
+		border-top: 3px solid #FAFAFA;
+	}
+}
+
 .nav-link {
 	color: #FAFAFA;
 	text-align: left;
@@ -258,7 +282,6 @@ html, body, #sidebar, .navbar-nav {
 
 .nav-link:hover, .bottom-nav:hover {
 	color: #FAFAFA;
-	background-color: #666;
 	text-decoration: none;
 }
 
@@ -298,3 +321,434 @@ html, body, #sidebar, .navbar-nav {
 		font-size: 4.2vw;
 	}
 }
+
+/* ********* */
+/* Dashboard */
+/* ********* */
+
+#brickwall {
+	width: 100%;
+	padding: 16px;
+	column-count: 3;
+	column-gap: 16px;
+}
+
+/* Smaller than xl */
+@media only screen and (max-width: 1200px) {
+	#brickwall {
+		column-count: 2;
+	}
+}
+
+/*  */
+@media only screen and (max-width: 576px) {
+	#brickwall {
+		column-count: 1;
+	}
+}
+
+.brick {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 16px;
+	background-color: #5FBABF;
+	position: relative;
+	text-align: left;
+}
+
+.brick:hover img {
+	opacity: 0.08;
+	filter: grayscale(100%);
+}
+
+.brick:hover .dash-text-wrapper, .brick:hover .brick-creator {
+	opacity: 1;
+}
+
+.brick img {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	object-fit: cover;
+	transition: opacity 0.3s, filter 0.3s;
+
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility:    hidden;
+	-ms-backface-visibility:     hidden;
+}
+
+.dash-text-wrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 10%;
+	line-height: 1.6;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.dash-text-wrapper h3 {
+	font-size: 1.8vw;
+}
+
+.dash-text-wrapper p {
+	font-size: 1vw;
+}
+
+.dash-text-wrapper p, .brick-creator {
+	max-width: 84%;
+}
+
+.brick-creator {
+	position: absolute;
+	bottom: 0;
+	margin: 10%;
+	opacity: 0;
+	padding: 8px 16px 0 0 ;
+	transition: opacity 0.3s;
+	border-top: 1px solid #FAFAFA;
+	font-size: 0.9vw;
+}
+
+/* Smaller then lg */
+@media only screen and (max-width: 992px) {
+	.dash-text-wrapper {
+		padding: 6%;
+	}
+
+	.dash-text-wrapper h3 {
+		font-size: 2.4vh;
+	}
+
+	.dash-text-wrapper p {
+		font-size: 1.6vh;
+	}
+
+	.brick-creator {
+		font-size: 1.4vh;
+		margin: 6%;
+	}
+}
+
+/* Smaller then md */
+@media only screen and (max-width: 768px) {
+	.dash-text-wrapper {
+		padding: 6%;
+	}
+
+	.dash-text-wrapper h3 {
+		font-size: 3.6vh;
+	}
+
+	.dash-text-wrapper p {
+		font-size: 2vh;
+	}
+
+	.brick-creator {
+		font-size: 1.8vh;
+		margin: 6%;
+	}
+}
+
+/* *************** */
+/* Add New Project */
+/* *************** */
+
+#section {
+	height: 100vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-bottom: 8vh;
+	background-color: #FAFAFA;
+}
+
+#content {
+	height: 100vh;
+	width: 100%;
+	padding-top: 4vh;
+	color: #3F3F3F;
+}
+
+.section-container {
+	padding: 2vh 0;
+}
+
+.section-form-header {
+	font-size: 1.32em;
+	display: block;
+	border-bottom: 1px solid #403D39;
+	margin-bottom: 16px;
+}
+
+.form-label {
+	min-width: 12vw;
+	margin-right: 5vw;
+	text-align: left;
+	font-size: 1em;
+}
+
+#section .form-group {
+	margin: auto;
+	margin-top: 16px;
+}
+
+/* CODEPEN miracle man */
+.file-drop-area {
+  border: 1px dashed #403D39;
+  border-radius: 6px;
+  position: relative;
+  max-width: 56vw;
+  height: 20vh;
+  padding: 6vh 12vw 8vh;
+  transition: 0.2s;
+  margin: 3vh auto 1vh;
+}
+
+.file-drop-area:hover {
+	background-color: #fafafa;
+}
+
+.file-drop-items {
+	text-align: center;
+}
+
+.file-msg {
+  font-size: 1.2em;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: calc(100% - 130px);
+  vertical-align: middle;
+}
+
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-select {
+	padding: 8px;
+}
+
+.form-text-box {
+	width: 42vw !important;
+}
+
+.section-text {
+	padding: 1vh 1vw;
+	display: block;
+}
+
+.section-button-group {
+	padding: 2vh 1vw;
+	display: block;
+}
+
+.section-button-group .btn {
+	margin-left: 8px;
+	margin-top: 16px;
+}
+
+.section-button-group .form-check-label {
+	display: inline-block;
+	text-align: left;
+}
+
+/* Smaller than xl */
+@media only screen and (max-width: 1200px) {
+	#section {
+		padding-bottom: 12vh;
+	}
+
+	.form-label {
+		display: block;
+		width: 100vw;
+	}
+
+	.form-text-box {
+		width: 100vw !important;
+	}
+}
+
+/* Smaller than lg */
+@media only screen and (max-width: 992px) {
+	.section-button-group .form-check-label,  .section-button-group .form-check-input {
+		display: inline-block;
+		text-align: center;
+	}
+}
+
+/* Smallest things ever */
+@media only screen and (max-width: 400px) {
+	#section {
+		padding-bottom: 16vh;
+	}
+}
+
+/* ******** */
+/* Projects */
+/* ******** */
+
+.wrapper {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+	grid-auto-rows: 300px;
+	grid-gap: 10px;
+	margin: 10px;
+}
+
+.project {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.project img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+/* Small than lg */
+@media only screen and (max-width: 992px) {
+	.wrapper {
+		grid-template-columns: repeat(auto-fill, minmax(324px, 1fr));
+		grid-auto-rows: 272px;
+	}
+}
+
+/* ************ */
+/* Project View */
+/* ************ */
+
+#toptions {
+	width: 100%;
+	padding: 0 3vw;
+	position: absolute;
+	/*background: linear-gradient(#5FBABF, rgba(95, 186, 191, 0.7), rgba(0, 0, 0, 0));*/
+	background-color: #5FBABF;
+	margin-left: auto;
+}
+
+#toptions a, #toptions button {
+	color: #FAFAFA;
+	font-size: 1.2em;
+	margin-left: 32px;
+	padding: 8px 4px 4px 4px;
+}
+
+#toptions a {
+	float: left;
+}
+
+#toptions a:hover {
+	text-decoration: none;
+}
+
+#toptions button {
+	background-color: transparent;
+	border: none;
+	font-size: 2em;
+	float: right;
+	margin-top: -8px;
+}
+
+#project-banner {
+	position: relative;
+	width: 100%;
+	height: 72vh;
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#project-banner h1 {
+	color: #FAFAFA;
+	font-weight: 300;
+	/*background-color: rgba(250, 250, 250, 0.6);*/
+	background-color: #5FBABF;
+	display: inline-block;
+	padding: 16px 32px;
+	margin: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+/* Tags */
+#project-tags {
+	display: block;
+	overflow-y: hidden;
+	background-color: #5FBABF;
+}
+
+#project-tags a {
+	color: #FAFAFA;
+	padding: 0;
+	margin: 0;
+	margin-left: 16px;
+	font-size: 0.64em;
+}
+
+/* Everything below poverty line */
+#project-content {
+	color: #3F3F3F;
+	margin: 2vh 2vw;
+	font-size: 1.05em;
+}
+
+/* Profile Image and Name of Creator */
+#project-creator {
+	padding: 24px 16px 16px 32px;
+	display: inline-block;
+	float: left;
+}
+
+#project-creator img {
+	height: 72px;
+	width: 72px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+#project-creator div {
+	display: inline-block;
+	padding: 16px;
+	vertical-align: middle;
+	line-height: 2;
+}
+
+#project-creator * {
+	margin: 0;
+}
+
+#project-creator a {
+	color: #3F3F3F;
+}
+
+#project-creator a:hover {
+	color: #666;
+}
+
+#project-creator p {
+	font-size: 0.8em;
+}
+
+#project-text {
+	padding: 16px 32px;
+	line-height: 2.2;
+}
+
+/* Comments Section */
