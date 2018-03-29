@@ -39,6 +39,7 @@ Controller.doLogin = function(req, res, next) {
 Controller.dash = function(req, res) {
 	if(!req.isAuthenticated())
 		res.redirect('/');
+	res.render('dashboard');
 	/*
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
