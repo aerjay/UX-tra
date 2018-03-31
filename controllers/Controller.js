@@ -47,19 +47,19 @@ Controller.doLogin = function(req, res, next) {
 Controller.dash = function(req, res) {
 	if(!req.isAuthenticated())
 		res.redirect('/');
-	res.render('dashboard',{
-		succ: req.flash('succ'),
-		error: req.flash('error')
-	});
-	/*
+	projs = [];
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
 		docs.forEach(function(entry){
+			//WE MIIGHT NEED A CONTENT TYPE WHICH WE CAN GET  
+			//pdata = image buffer
+			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes});
 		});
-		res.render('dashboard', {data: 'd'}); //need to change to render with user 
-
+		res.render('dashboard', {data: projs, 
+			succ: req.flash('succ'),
+			error: req.flash('error')	
+		}); //need to change to render with user 
 	});
-	*/
 };
 
 Controller.proj = function(req, res){
@@ -74,6 +74,7 @@ Controller.doProj =function(req, res){
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		console.log(doc.pdata);
+		//WE CAN GET CONTENT TYPE (IMAGE TYPE) HERE 
 		doc.pdata = req.files.file.data;
 		doc.pdes = req.body.des;
 		doc.pname = req.body.projname;
@@ -92,6 +93,7 @@ Controller.doProj =function(req, res){
 // logouts
 Controller.logout = function(req, res) {
 	req.logout();
+	req.session.destroy();
 	res.redirect('/');
 };
 

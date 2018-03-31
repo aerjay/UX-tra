@@ -61,6 +61,11 @@
 		<div id="section" class="col-xl-10 col-lg-9 col-12">
 			<div id="brickwall" class="container-fluid">
 				<!-- Projects appended here -->
+				<% if (data.length > 0) { %>
+					<% for (let i of data) {%>
+						<div class="alert alert-info"><%= i.proj %></div>
+					<% } %>	
+				<% } %>
 			</div>
 		</div>
 
