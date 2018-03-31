@@ -51,9 +51,7 @@ Controller.dash = function(req, res) {
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
 		docs.forEach(function(entry){
-			//WE MIIGHT NEED A CONTENT TYPE WHICH WE CAN GET  
-			//pdata = image buffer
-			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes});
+			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, ctype: entry.pctype});
 		});
 		res.render('dashboard', {data: projs, 
 			succ: req.flash('succ'),
@@ -74,10 +72,10 @@ Controller.doProj =function(req, res){
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		console.log(doc.pdata);
-		//WE CAN GET CONTENT TYPE (IMAGE TYPE) HERE 
-		doc.pdata = req.files.file.data;
+		doc.pdata = req.files.file.data; //img buffer
 		doc.pdes = req.body.des;
 		doc.pname = req.body.projname;
+		doc.pctype = req.files.file.mimetype; //content type 
 		doc.save(function(err){
 			if(err){
 				console.log("db not updated");
@@ -85,7 +83,10 @@ Controller.doProj =function(req, res){
 				res.redirect('/dash');
 			}		
 		});
-	req.flash("succ", "Upload Success");
+	if(err)
+		req.flash("error", "Upload Failed");
+	else
+		req.flash("succ", "Upload Success");
 	res.redirect('/dash');
 	});
 };
