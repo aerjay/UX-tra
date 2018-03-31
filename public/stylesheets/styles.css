@@ -5,19 +5,24 @@
 /* Load Fonts */
 @font-face {
 	font-family: 'Manifesto';
-	src: url('../fonts/MANIFESTO.ttf');
+	src: url('../css/fonts/MANIFESTO.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito';
-	src: url('../fonts/Nunito-Regular.ttf');
+	src: url('../css/fonts/Nunito-Light.ttf');
+}
+
+@font-face {
+	font-family: 'Nunito-Thick';
+	src: url('../css/fonts/Nunito-Regular.ttf');
 }
 
 /* Documents */
 html, body {
 	height: 100vh;
 	width: 100vw;
-	color: #FAFAFA;
+	color: #666;
 	font-family: 'Nunito', 'Helvetica', 'sans-serif';
 	overflow: hidden;
 }
@@ -29,19 +34,28 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 /* All the colours */
 .colour-primary, .colour-primary:hover {
-	background-color: #3F3F3F;
+	background-color: #5FBABF;
 }
 
-.colour-accent, .colour-accent:hover {
-	background-color: #5FBABF;
+.colour-white {
+	background-color: #FAFAFA;
+}
+
+.hover-primary {
+	transition: background-color 0.3s;
 }
 
 .hover-primary:hover {
-	background-color: #666;
+	background-color: #FAFAFA;
+	border: 1px solid #5FBABF;
 }
 
-.hover-accent:hover {
-	background-color: #5FBABF;
+#logo {
+	font-size: 3vw;
+	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
+	padding: 1vh 0.5vw;
+	border: 1.5px solid #333;
+	display: inline-block;
 }
 
 /* ********** */
@@ -51,7 +65,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 #banner {
 	height: 100%;
 	width: 100%;
-	background-image: linear-gradient(rgba(80, 80, 80, 0.5), rgba(0, 0, 0, 0.5)), url(../images/blurredtiles.png);
+	background-image: url(images/paintjob.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -60,45 +74,79 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	overflow: hidden;
 }
 
-#topbar {
-	text-align: center;
-	padding: 1.6vh 1vw;
-	background-color: #3F3F3F;
-}
-
-#topbar #logo {
-	margin: 0;
-	display: inline-block;
-	font-size: 2vw;
-}
-
 #banner-content {
 	height: 100%;
-	max-width: 80%;
-	margin: auto;
-	padding-top: 16vh;
+}
+
+#banner-title, #banner-text {
+	text-shadow: 0px 3px 6px #00000041;
+	margin-left: 16%;
 }
 
 #banner-title {
-	font-size: 4.6vw;
-	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
+	font-size: 4.2vw;
 	letter-spacing: 1px;
+	font-family: 'Nunito-Thick', 'Helvetica', 'sans-serif';
+	max-width: 30%;
+}
+
+.phone-logo {
+	/*text-shadow: 0 3px 6px #00000041;*/
+	font-size: 4.6vh !important;
+	margin-top: -32px;
+	color: #111 !important;
+}
+
+.login {
+	height: 100%;
+	display: flex;
+	background-color: #FAFAFA;
+	color: #333;
+	box-shadow: -0.5px 0 6px #00000041;
+}
+
+.branding {
+	text-align: center;
+	width: 100%;
+	padding-top: 24%;
+}
+
+.motto {
+	text-transform: uppercase;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 16px;
+	margin-bottom: 16px;
+	padding: 8px 16px;
+	border-left: 1px solid #111;
+}
+
+#banner-text {
+	font-size: 2vw;
+	max-width: 50%;
 }
 
 /* Consistent Button! */
 .btn {
 	padding: 8px 16px;
 	font-size: 1.1em;
-	background-color: #3F3F3F;
+	background-color: #5FBABF;
 	color: #FAFAFA;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	border-radius: 6px;
 }
 
+.alt {
+	background-color: #DAB72A;
+	margin-left: 16px;
+}
+
 .btn:hover {
-	background-color: #666;
-	border: 1px solid #3F3F3F;
+	background-color: #FAFAFA;
+	border: 1px solid #5FBABF;
+	color: #5FBABF;
 }
 
 /* Form */
@@ -114,7 +162,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	font-size: 1.6vw;
 	letter-spacing: 1px;
 	padding: 16px 0;
-	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
+	font-family: 'Nunito', 'Helvetica', 'sans-serif';
 }
 
 .form-item {
@@ -128,6 +176,12 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	border: 1px solid #666;
 	margin-bottom: 8px;
 	padding: 10px;
+}
+
+.form-error {
+	text-align: center;
+	color: #E15554;
+	padding: 2px 8px;
 }
 
 .form-check-label {
@@ -171,6 +225,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	margin: auto;
 	border: 1px solid #3F3F3F;
 	padding: 1vh 0.5vw;
+	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
 }
 
 .close {
@@ -182,11 +237,30 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 @media only screen and (max-width: 1200px) {
 	#banner-title {
 		font-size: 4.6vh;
+		margin-top: 12%;
 	}
 
-	.form-group {
+	#banner-text {
+		margin-bottom: 12vh;
+		font-size: 2.4vw;
+	}
+
+	.login {
+		min-height: 50vh;
+	}
+
+	.branding {
+		padding-top: 12%;
+	}
+
+	#banner .form-group {
 		max-width: 64vw;
+		min-width: 32vw;
 		font-size: 2vh;
+	}
+
+	#banner .modal-content {
+		max-width: 90vw;
 	}
 
 	.form-title {
@@ -196,25 +270,40 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 /* Smaller than md */
 @media only screen and (max-width: 768px) {
-	#topbar #logo {
-		font-size: 2vh;
-		padding: 1vh 1.2vw;
-	}
-
 	#banner-content {
-		padding-top: 12vh;
 		margin: 0;
 	}
 
 	#banner-title {
-		font-size: 4.6vh;
+		font-size: 4.8vh;
+	}
+
+	#banner-text {
+		font-size: 2.4vh;
+		max-width: 64%;
 	}
 }
 
 @media only screen and (max-width: 576px) {
 	#banner-content {
 		max-width: 100vw;
-		padding-top: 8vh;
+	}
+
+	#banner-title {
+		font-size: 5.2vh;
+		max-width: 64%;
+		padding-top: 32px;
+	}
+
+	#banner-text {
+		font-size: 3.2vh;
+		max-width: 84%;
+	}
+
+	#banner-title, #banner-text {
+		width: 100%;
+		margin: auto;
+		text-align: center;
 	}
 
 	.form-group {
@@ -232,6 +321,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 #sidebar {
 	height: 100vh;
+	box-shadow: 3px 0 6px #888;
 }
 
 #sidebar .navbar-nav {
@@ -239,14 +329,6 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	width: 100%;
 	margin: auto;
 	padding-top: 10%;
-}
-
-#logo {
-	font-size: 3vw;
-	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
-	padding: 1vh 0.5vw;
-	border: 1px solid #FAFAFA;
-	margin: 1vh 0 4.8vh;
 }
 
 #sidebar svg {
@@ -318,7 +400,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 /* Smaller than xl */
 @media only screen and (max-width: 1200px) {
 	#logo {
-		font-size: 4.2vw;
+		font-size: 3vh;
 	}
 }
 
@@ -351,9 +433,15 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	display: inline-block;
 	width: 100%;
 	margin-bottom: 16px;
-	background-color: #5FBABF;
+	background-color: #FAFAFA;
 	position: relative;
 	text-align: left;
+	transition: outline 0.3s;
+}
+
+.brick:hover {
+	outline: 1px solid #5FBABF;
+	outline-offset: -16px;
 }
 
 .brick:hover img {
@@ -370,7 +458,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	margin: 0;
 	width: 100%;
 	object-fit: cover;
-	transition: opacity 0.3s, filter 0.3s;
+	transition: opacity 0.3s, filter 0.3s;
 
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility:    hidden;
@@ -385,6 +473,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	line-height: 1.6;
 	opacity: 0;
 	transition: opacity 0.3s;
+	color: #5FBABF;
 }
 
 .dash-text-wrapper h3 {
@@ -406,14 +495,15 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	opacity: 0;
 	padding: 8px 16px 0 0 ;
 	transition: opacity 0.3s;
-	border-top: 1px solid #FAFAFA;
+	border-top: 1px solid #5FBABF;
 	font-size: 0.9vw;
+	color: #5FBABF
 }
 
 /* Smaller then lg */
 @media only screen and (max-width: 992px) {
 	.dash-text-wrapper {
-		padding: 6%;
+		padding: 8%;
 	}
 
 	.dash-text-wrapper h3 {
@@ -426,16 +516,12 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 	.brick-creator {
 		font-size: 1.4vh;
-		margin: 6%;
+		margin: 8%;
 	}
 }
 
 /* Smaller then md */
 @media only screen and (max-width: 768px) {
-	.dash-text-wrapper {
-		padding: 6%;
-	}
-
 	.dash-text-wrapper h3 {
 		font-size: 3.6vh;
 	}
@@ -446,7 +532,6 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 	.brick-creator {
 		font-size: 1.8vh;
-		margin: 6%;
 	}
 }
 
@@ -459,7 +544,6 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	padding-bottom: 8vh;
-	background-color: #FAFAFA;
 }
 
 #content {
