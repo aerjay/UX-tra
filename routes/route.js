@@ -18,7 +18,7 @@ router.post('/register', auth.doRegister);
 router.post('/login', auth.doLogin);
 
 // route for login 
-router.post('/login', auth.home);
+router.get('/login', auth.home);
 
 // route for logout action
 router.get('/logout', auth.logout);

@@ -13,9 +13,8 @@ let schema = new Schema({
 	username: String,
 	password: String,
 	pname: String, 
-	pdata: Buffer, 
-	pdes: String,
-	pctype: String
+	pdata: String,
+	pdes: String
 });
 
 var options = {

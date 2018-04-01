@@ -51,15 +51,12 @@ Controller.dash = function(req, res) {
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
 		docs.forEach(function(entry){
-			var img = new Buffer(entry.pdata).toString('base64'); 
-			img =  "data:" + entry.pctype + ';base64,' +img;
-			img = JSON.stringify(img);
-			projs.push({proj: entry.pname, buff: img, des: entry.pdes, auth: entry.username});
+			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
 		res.render('dashboard', {data: projs, 
 			succ: req.flash('succ'),
 			error: req.flash('error')	
-		}); //need to change to render with user 
+		}); 
 	});
 };
 
@@ -74,23 +71,26 @@ Controller.doProj =function(req, res){
 		res.redirect('/');
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
+		if(err){
+			req.flash("error", "Upload Failed");
+			res.redirect('/dash');
+		}
 		console.log(doc.pdata);
-		doc.pdata = req.files.file.data; //img buffer
+		var img = new Buffer(req.files.file.data).toString('base64'); 
+		img =  "data:" + req.files.file.mimetype + ';base64,' +img;
+		img = JSON.stringify(img);
+		doc.pdata = img;
 		doc.pdes = req.body.des;
 		doc.pname = req.body.projname;
-		doc.pctype = req.files.file.mimetype; //content type 
+
 		doc.save(function(err){
 			if(err){
 				console.log("db not updated");
-				req.flash("error", "Upload Error");
+				req.flash("error", "Upload Failed");
 				res.redirect('/dash');
-			}		
+			}
+		res.redirect('/dash');
 		});
-	if(err)
-		req.flash("error", "Upload Failed");
-	else
-		req.flash("succ", "Upload Success");
-	res.redirect('/dash');
 	});
 };
 
