@@ -14,7 +14,9 @@ let schema = new Schema({
 	password: String,
 	pname: String, 
 	pdata: String,
-	pdes: String
+	pdes: String,
+	isVerified: { type: Boolean, default: false },
+	token: { type: String }
 });
 
 var options = {

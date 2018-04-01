@@ -1,4 +1,6 @@
+import $ from 'jquery';
 
+$(document).ready(function(){
 var $fileInput = $('.file-input');
 var $droparea = $('.file-drop-area');
 
@@ -32,5 +34,10 @@ $('.selectbox-option').mousedown(function(e) {
     return false;
 });
 
-document.getElementById('#output').innerHTML = location.search;
+if(document.getElementById('#output') != null){
+  document.getElementById('#output').innerHTML = location.search;
+}
+
 $(".selectbox").chosen();
+
+});

@@ -29,4 +29,7 @@ router.get('/proj', auth.proj);
 //route for project action
 router.post('/proj', auth.doProj);
 
+//email confirmation
+router.get('/confirmation', auth.doConfirmation);
+
 module.exports = router;
