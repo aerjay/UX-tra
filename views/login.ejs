@@ -44,6 +44,9 @@
 							<% if (error.length > 0) { %>
 									<div class="alert alert-danger"><%= error %></div>
 							<% } %>
+							<% if (succ.length > 0) { %>
+									<div class="alert alert-success"><%= succ %></div>
+							<% } %>
 							</span>
 							<div class="form-check form-item">
 								<label class="form-check-label">
@@ -61,6 +64,17 @@
 			</div>
 
 			<div class="mx-auto">
+				<!-- Error -->
+				<% if (error.length > 0) { %>
+				<span class="form-error">
+					<div class="alert alert-danger"><%= error %></div>
+				</span>
+				<% } %>
+				<% if (succ.length > 0) { %>
+				<span class="form-error">
+					<div class="alert alert-success"><%= succ %></div>
+				</span>
+				<% } %>
 				<button class="btn" data-toggle='modal' href="#log-in-form-modal">
 					Log In
 				</button>
@@ -81,12 +95,6 @@
 								<div class="modal-body">
 									<input id="input" class="form-control form-item" type="email" name="username" placeholder="Email Address">
 									<input class="form-control form-item" type="password" name="password" placeholder="Password">
-									<!-- Error -->
-									<span class="form-error form-item">
-									<% if (error.length > 0) { %>
-											<div class="alert alert-danger"><%= error %></div>
-									<% } %>
-									</span>
 									<div class="form-check form-item">
 										<label class="form-check-label">
 											<input class="form-check-input" type="checkbox" name="remember"> Remember me
@@ -116,12 +124,6 @@
 									<input id="input" class="form-control form-item" type="email" name="username" placeholder="Email Address">
 									<input class="form-control form-item" type="password" name="password" placeholder="Password">
 									<input class="form-control form-item" type="password" name="confirmation" placeholder="Confirm password">
-									<!-- Error -->
-									<span class="form-error form-item">
-									<% if (error.length > 0) { %>
-											<div class="alert alert-danger"><%=error%></div>
-									<% } %>
-									</span>
 									<div class="form-check form-item">
 										<label class="form-check-label">
 											<input class="form-check-input" type="checkbox" name="remember"> Remember me
