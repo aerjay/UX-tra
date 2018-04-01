@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/User");
 var nodemailer = require('nodemailer');
-
+var crypto = require("crypto");
 var Controller = {};
 
 // Restrict access to root page
