@@ -37,10 +37,14 @@
 					<form action="/login" method="post">
 						<div class="form-group">
 							<label class="form-title">Log in to UXTRA</label>
-							<input class="form-control form-item" type="email" name="email" placeholder="Email Address">
+							<input class="form-control form-item" type="email" name="username" placeholder="Email Address">
 							<input class="form-control form-item" type="password" name="password" placeholder="Password">
 							<!-- Error -->
-							<span class="form-error form-item"></span>
+							<span class="form-error form-item">
+							<% if (error.length > 0) { %>
+									<div class="alert alert-danger"><%= error %></div>
+							<% } %>
+							</span>
 							<div class="form-check form-item">
 								<label class="form-check-label">
 									<input class="form-check-input" type="checkbox" name="remember"> Remember me
@@ -75,10 +79,14 @@
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
 								<div class="modal-body">
-									<input id="input" class="form-control form-item" type="email" name="email" placeholder="Email Address">
+									<input id="input" class="form-control form-item" type="email" name="username" placeholder="Email Address">
 									<input class="form-control form-item" type="password" name="password" placeholder="Password">
 									<!-- Error -->
-									<span class="form-error form-item"></span>
+									<span class="form-error form-item">
+									<% if (error.length > 0) { %>
+											<div class="alert alert-danger"><%= error %></div>
+									<% } %>
+									</span>
 									<div class="form-check form-item">
 										<label class="form-check-label">
 											<input class="form-check-input" type="checkbox" name="remember"> Remember me
@@ -105,11 +113,15 @@
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
 								<div class="modal-body">
-									<input id="input" class="form-control form-item" type="email" name="email" placeholder="Email Address">
+									<input id="input" class="form-control form-item" type="email" name="username" placeholder="Email Address">
 									<input class="form-control form-item" type="password" name="password" placeholder="Password">
 									<input class="form-control form-item" type="password" name="confirmation" placeholder="Confirm password">
 									<!-- Error -->
-									<span class="form-error form-item"></span>
+									<span class="form-error form-item">
+									<% if (error.length > 0) { %>
+											<div class="alert alert-danger"><%=error%></div>
+									<% } %>
+									</span>
 									<div class="form-check form-item">
 										<label class="form-check-label">
 											<input class="form-check-input" type="checkbox" name="remember"> Remember me

@@ -7,9 +7,9 @@ var Controller = {};
 // Restrict access to root page
 Controller.home = function(req, res) {   
 //    res.render('test', {data: JSON.stringify("hey")});
-	res.render('index', {succ: req.flash('succ'),
-	error: req.flash('error')
-});
+	res.render('login', {succ: req.flash('succ'),
+		error: req.flash('error')
+	});
 };
 
 // Post registration
@@ -51,7 +51,10 @@ Controller.dash = function(req, res) {
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
 		docs.forEach(function(entry){
-			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, ctype: entry.pctype});
+			var img = new Buffer(entry.pdata).toString('base64'); 
+			img =  "data:" + entry.pctype + ';base64,' +img;
+			img = JSON.stringify(img);
+			projs.push({proj: entry.pname, buff: img, des: entry.pdes, auth: entry.username});
 		});
 		res.render('dashboard', {data: projs, 
 			succ: req.flash('succ'),

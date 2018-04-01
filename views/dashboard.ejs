@@ -62,8 +62,15 @@
 			<div id="brickwall" class="container-fluid">
 				<!-- Projects appended here -->
 				<% if (data.length > 0) { %>
-					<% for (let i of data) {%>
-						<div class="alert alert-info"><%= i.proj %></div>
+				<% for (let i of data) {%>
+				<div class="brick">
+						<img src= <%-i.buff%>>
+						<div class="dash-text-wrapper">
+							<h3><%=i.proj%></h3>
+							<p><%=i.des%></p>
+						</div>
+						<p class="brick-creator">By <%=i.auth%></p>
+				</div>
 					<% } %>	
 				<% } %>
 			</div>
@@ -72,8 +79,6 @@
 	</div>
 
 </body>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="/javascripts/dashboard.js"></script>
-
 </html>
