@@ -7,9 +7,10 @@ var Controller = {};
 
 // Restrict access to root page
 Controller.home = function(req, res) {
-	if(req.isAuthenticated())
-		return res.redirect('/dash');
-
+	User.findOne({'username': req.user.username}, function(err, user){
+		if(user != null && user.isVerified && req.isAuthenticated())
+			return res.redirect('/dash');
+	});
 	res.render('login', {
 		succ: req.flash('succ'),
 		error: req.flash('error')
@@ -33,9 +34,8 @@ Controller.doRegister = function(req, res) {
 				req.flash("error", "err.message");
 				return res.redirect('/'); 
 			}
- 
 			// Send the email
-			var transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: 'noreply.uxtra@gmail.com', pass: 'winterseng513'} });
+		var transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: 'noreply.uxtra@gmail.com', pass: 'winterseng513'} });
 			var mailOptions = { 
 			from: 'no-reply@uxtra.com', 
 			to: req.body.username, 
@@ -174,10 +174,7 @@ Controller.doConfirmation = function(req, res){
 					return res.redirect('/'); 
 				}
 				req.flash("succ", "Account has been verified, Please log in.");
-				res.render('login', {
-					succ: req.flash('succ'),
-					error: req.flash('error')
-				});
+				res.redirect('/');
             });
     });
 };

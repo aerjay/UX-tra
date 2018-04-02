@@ -9,8 +9,8 @@ $(function() {
 		var wall = $('#brickwall');
 		let brick = $('<div class="brick">')
 		brick.css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
-		
-		brick.append('<img src="' + proj.buff + '">');
+		date = new Date();
+		brick.append('<img src="' + proj.buff + '?'+ date.getTime() +'">');
 		let text = $('<div class="dash-text-wrapper">')
 		text.append($('<h3>').html(title));
 		text.append($('<p>').html(desc));
@@ -21,5 +21,5 @@ $(function() {
 		wall.append(brick);
 	});
 
-	brick.css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
+	$('<div class="brick">').css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
 });
