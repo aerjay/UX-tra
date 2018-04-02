@@ -8,13 +8,12 @@ var title = "Cryptocurrency App";
 var desc = "An application designed to keep track of a user's cryptocurrencies";
 var author = 'Aerjay "Big Dick" Italia';
 
-var wall = $('#brickwall');
+var wall = $('.wrapper');
 var limit = 32;
 for (let i=0; i<limit; i++) {
 	let brick = $('<div class="brick">')
 
 	// Add the image
-	brick.css('max-height', (Math.floor(Math.random() * 120) + 320) + 'px');
 	brick.append('<img src="sample/' + images[Math.floor(Math.random() * 14)] + '">');
 
 	// Add the text (title :: h3 & description :: p)
