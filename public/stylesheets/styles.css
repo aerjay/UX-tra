@@ -516,6 +516,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	min-height: 220px;
 	object-fit: cover;
 	transition: opacity 0.3s, filter 0.3s;
 
@@ -547,7 +548,12 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 }
 
 .dash-text-wrapper p {
-	font-size: 1.2vw;
+	font-size: 1.1vw;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 
 .dash-text-wrapper p, .brick-creator {
@@ -557,7 +563,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 .brick-creator {
 	position: absolute;
 	bottom: 0;
-	margin: 10%;
+	margin: 8%;
 	opacity: 0;
 	padding: 8px 16px 0 0 ;
 	transition: opacity 0.3s;
