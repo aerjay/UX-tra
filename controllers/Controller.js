@@ -8,7 +8,7 @@ var Controller = {};
 // Restrict access to root page
 Controller.home = function(req, res) {
 	if(req.isAuthenticated())
-		res.redirect('/dash');
+		return res.redirect('/dash');
 
 	res.render('login', {
 		succ: req.flash('succ'),
@@ -96,7 +96,7 @@ Controller.dash = function(req, res) {
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
-		res.render('dashboard'); 
+		res.render('dashboard',{data: projs}); 
 	});
 };
 
@@ -105,12 +105,13 @@ Controller.proj = function(req, res){
 		res.redirect('/');
 	//get all of the projects and send it to the client
 	projs = [];
-	var query = {'username': req.user.username}; 
+	var query = {'username': req.user.username, 'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
 		res.render('projects', {
+			data: projs,
 			error: req.flash('error')
 		});
 	});
@@ -119,7 +120,7 @@ Controller.proj = function(req, res){
 Controller.addProj = function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
-	res.render('add-project');
+	res.render('add-project', {error: req.flash('error')});
 };
 
 Controller.doProj =function(req, res){

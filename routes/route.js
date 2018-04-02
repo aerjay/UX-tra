@@ -27,7 +27,7 @@ router.get('/logout', auth.logout);
 router.get('/proj', auth.proj);
 
 //route for add project action
-router.post('/addproj', auth.doProj);
+router.post('/proj', auth.doProj);
 
 //route for add project 
 router.get('/addproj', auth.addProj)
