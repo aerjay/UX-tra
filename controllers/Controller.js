@@ -7,21 +7,28 @@ var Controller = {};
 
 // Restrict access to root page
 Controller.home = function(req, res) {
-	console.log(req.user.username);
-	User.findOne({'username': req.user.username}, function(err, user){
-		if (err) { 	
-			return next(err); 
-		}
-		if(user != null && user.isVerified && req.isAuthenticated()){
-			return res.redirect('/dash');
-		}
-		else{
-			return 	res.render('login', {
-				succ: req.flash('succ'),
-				error: req.flash('error')
-			});
-		}
-	});
+	if(req.user.username  !== undefined){
+		User.findOne({'username': req.user.username}, function(err, user){
+			if (err) { 	
+				return next(err); 
+			}
+			if(user != null && user.isVerified && req.isAuthenticated()){
+				return res.redirect('/dash');
+			}
+			else{
+				return 	res.render('login', {
+					succ: req.flash('succ'),
+					error: req.flash('error')
+				});
+			}
+		});	
+	}
+	else{
+		res.render('login', {
+			succ: req.flash('succ'),
+			error: req.flash('error')
+		});
+	}
 };
 
 // Post registration
