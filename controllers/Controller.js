@@ -6,9 +6,12 @@ var crypto = require("crypto");
 var Controller = {};
 
 // Restrict access to root page
-Controller.home = function(req, res) {   
-//    res.render('test', {data: JSON.stringify("hey")});
-	res.render('login', {succ: req.flash('succ'),
+Controller.home = function(req, res) {
+	if(req.isAuthenticated())
+		res.redirect('/dash');
+
+	res.render('login', {
+		succ: req.flash('succ'),
 		error: req.flash('error')
 	});
 };
@@ -27,13 +30,11 @@ Controller.doRegister = function(req, res) {
 		// Save the verification token
 		user.save(function (err) {
 			if (err) { 
-				console.log("2");
 				req.flash("error", "err.message");
 				return res.redirect('/'); 
 			}
  
 			// Send the email
-			console.log(req.body.username);
 			var transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: 'noreply.uxtra@gmail.com', pass: 'winterseng513'} });
 			var mailOptions = { 
 			from: 'no-reply@uxtra.com', 
@@ -45,14 +46,12 @@ Controller.doRegister = function(req, res) {
 				req.flash("error", "err.message");
 				return res.redirect('/'); 
 			}
-				console.log(info);
 				req.flash("succ",'A verification email has been sent to ' +req.body.username+ '.' );
 				return res.redirect('/'); 
 			});
 		});
-
+		//Authenticate the user using local strategy
 		passport.authenticate('local')(req, res, function () {
-		//	req.flash("messages", {"success": "Sign Up Success"});
 			req.flash("succ", "Sign Up Success");
 			res.redirect('/'); 
 		});
@@ -66,17 +65,17 @@ Controller.doLogin = function(req, res, next) {
 			return next(err); 
 		}
 		//check if the email is verified
-		console.log("do login");
-		console.log(req._id);
 		User.findOne({ '_id': user._id}, function(err, user){
+			//if the user verified his/her email then load the dashboard
 			if (user != null && user.isVerified){
 				req.logIn(user, function(err) {
 					if (err) { return next(err); }
 					return res.redirect('/dash');
 				});
 			}
+			//or redirect to home with error message
 			else{ 
-				if(!user.isVerified)
+				if(user != null && !user.isVerified)
 					req.flash("error", "Log In Failed: Check your Email");
 				else
 					req.flash("error","Log In Failed: User not found");
@@ -89,6 +88,8 @@ Controller.doLogin = function(req, res, next) {
 Controller.dash = function(req, res) {
 	if(!req.isAuthenticated())
 		res.redirect('/');
+
+	//get all of the projects and send it to the client
 	projs = [];
 	var query = {'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
@@ -105,19 +106,22 @@ Controller.dash = function(req, res) {
 Controller.proj = function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
+
 	res.render('add-project');
 };
 
 Controller.doProj =function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
+	//get the user's email
+	var io = req.app.get('socketio');
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		if(err){
 			req.flash("error", "Upload Failed");
 			res.redirect('/dash');
 		}
-		console.log(req.files);
+		//get the project's info and uploaded image save it as a string in db
 		var img = new Buffer(req.files.file.data).toString('base64'); 
 		img =  "data:" + req.files.file.mimetype + ';base64,' +img;
 		img = JSON.stringify(img);
@@ -131,11 +135,14 @@ Controller.doProj =function(req, res){
 				req.flash("error", "Upload Failed");
 				res.redirect('/dash');
 			}
+		console.log("update others");
+		io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
 		res.redirect('/dash');
 		});
 	});
 };
 
+//check token
 Controller.doConfirmation = function(req, res){
 	User.findOne({ 'token': req.query.token}, function (err, user) {
             if (!user){
@@ -154,7 +161,10 @@ Controller.doConfirmation = function(req, res){
 					return res.redirect('/'); 
 				}
 				req.flash("succ", "Account has been verified, Please log in.");
-				res.redirect('/'); 
+				res.render('login', {
+					succ: req.flash('succ'),
+					error: req.flash('error')
+				});
             });
     });
 };
