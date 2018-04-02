@@ -7,13 +7,20 @@ var Controller = {};
 
 // Restrict access to root page
 Controller.home = function(req, res) {
+	console.log(req.user.username);
 	User.findOne({'username': req.user.username}, function(err, user){
-		if(user != null && user.isVerified && req.isAuthenticated())
+		if (err) { 	
+			return next(err); 
+		}
+		if(user != null && user.isVerified && req.isAuthenticated()){
 			return res.redirect('/dash');
-	});
-	res.render('login', {
-		succ: req.flash('succ'),
-		error: req.flash('error')
+		}
+		else{
+			return 	res.render('login', {
+				succ: req.flash('succ'),
+				error: req.flash('error')
+			});
+		}
 	});
 };
 
@@ -107,6 +114,9 @@ Controller.proj = function(req, res){
 	projs = [];
 	var query = {'username': req.user.username, 'pdata': { $exists: true}}; 
 	User.find(query, function(err, docs){
+		if (err) { 	
+			return next(err); 
+		}
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
@@ -130,52 +140,54 @@ Controller.doProj =function(req, res){
 	var io = req.app.get('socketio');
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
-		if(err){
-			req.flash("error", "Upload Failed");
-			res.redirect('/dash');
-		}
 		//get the project's info and uploaded image save it as a string in db
-		var img = new Buffer(req.files.file.data).toString('base64'); 
-		img =  "data:" + req.files.file.mimetype + ';base64,' +img;
-		img = JSON.stringify(img);
-		doc.pdata = img;
-		doc.pdes = req.body.des;
-		doc.pname = req.body.projname;
+		if(!err && req.files.file !== undefined){
+			var img = new Buffer(req.files.file.data).toString('base64'); 
+			img =  "data:" + req.files.file.mimetype + ';base64,' +img;
+			img = JSON.stringify(img);
+			doc.pdata = img;
+			doc.pdes = req.body.des;
+			doc.pname = req.body.projname;
 
-		doc.save(function(err){
-			if(err){
-				console.log("db not updated");
-				req.flash("error", "Upload Failed");
-				res.redirect('/addproj');
-			}
-		console.log("update others");
-		io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
-		res.redirect('/proj');
-		});
+			doc.save(function(err){
+				if(err){
+					console.log("db not updated");
+					req.flash("error", "Upload Failed");
+					res.redirect('/addproj');
+				}
+			console.log("update others");
+			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+			res.redirect('/proj');
+			});
+		}
+		else{
+			req.flash("error", "Upload Failed");
+			res.redirect('/addproj');
+		}
 	});
 };
 
 //check token
 Controller.doConfirmation = function(req, res){
 	User.findOne({ 'token': req.query.token}, function (err, user) {
-            if (!user){
-				req.flash("error", 'We were unable to find a user for this token.');
-				return res.redirect('/'); 
-			} 
-            if (user.isVerified){
-				req.flash("error", "Account is already been verified.");
-				return res.redirect('/'); 
-			} 
+        if (!user){
+			req.flash("error", 'We were unable to find a user for this token.');
+			return res.redirect('/'); 
+		} 
+        if (user.isVerified){
+			req.flash("error", "Account is already been verified.");
+			return res.redirect('/'); 
+		} 
             // Verify and save the user
-            user.isVerified = true;
-            user.save(function (err) {
-				if (err) { 
-					req.flash("error", "err.message");
-					return res.redirect('/'); 
-				}
-				req.flash("succ", "Account has been verified, Please log in.");
-				res.redirect('/');
-            });
+        user.isVerified = true;
+        user.save(function (err) {
+		if (err) { 
+			req.flash("error", "err.message");
+			return res.redirect('/'); 
+		}
+		req.flash("succ", "Account has been verified, Please log in.");
+		res.redirect('/');
+        });
     });
 };
 
