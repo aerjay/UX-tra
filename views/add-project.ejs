@@ -58,8 +58,12 @@
 			<nav class="container-fluid row">
 				<!-- for the top bar -->
 				<a href="" class="nav-link col-12 colour-accent">THIS BAR IS FOR DEMO PURPOSES</a>
+				<% if (error.length > 0) { %>
+					<span class="form-error">
+						<div class="alert alert-danger"><%= error %></div>
+					</span>
+				<% } %>
 			</nav>
-
 			<div id="content" class="container">
 			<form action="/proj" method="post" enctype="multipart/form-data">
 				<!-- Basic Information Section -->

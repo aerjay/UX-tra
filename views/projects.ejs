@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/regular.css" integrity="sha384-A/oR8MwZKeyJS+Y0tLZ16QIyje/AmPduwrvjeH6NLiLsp4cdE4uRJl8zobWXBm4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
 </head>
 <body>
 
@@ -70,7 +70,18 @@
 
 			<div class="tab-content">
 				<div class="wrapper" id="all">
-					
+					<% if (data.length > 0) { %>
+						<% for (let i of data) {%>
+						<div class="brick">
+								<img src= <%-i.buff%>>
+								<div class="dash-text-wrapper">
+									<h3><%=i.proj%></h3>
+									<p><%=i.des%></p>
+								</div>
+								<p class="brick-creator">By <%=i.auth%></p>
+						</div>
+							<% } %>	
+						<% } %>
 				</div>
 			</div>
 			<button id="addButton" class="btn">+
@@ -83,6 +94,5 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/projects.js"></script>
 
 </html>

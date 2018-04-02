@@ -96,17 +96,29 @@ Controller.dash = function(req, res) {
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
-		res.render('dashboard', {data: projs, 
-			succ: req.flash('succ'),
-			error: req.flash('error')	
-		}); 
+		res.render('dashboard'); 
 	});
 };
 
 Controller.proj = function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
+	//get all of the projects and send it to the client
+	projs = [];
+	var query = {'username': req.user.username}; 
+	User.find(query, function(err, docs){
+		docs.forEach(function(entry){
+			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+		});
+		res.render('projects', {
+			error: req.flash('error')
+		});
+	});
+};
 
+Controller.addProj = function(req, res){
+	if(!req.isAuthenticated())
+		res.redirect('/');
 	res.render('add-project');
 };
 
@@ -133,11 +145,11 @@ Controller.doProj =function(req, res){
 			if(err){
 				console.log("db not updated");
 				req.flash("error", "Upload Failed");
-				res.redirect('/dash');
+				res.redirect('/addproj');
 			}
 		console.log("update others");
 		io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
-		res.redirect('/dash');
+		res.redirect('/proj');
 		});
 	});
 };
