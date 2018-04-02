@@ -5,17 +5,17 @@
 /* Load Fonts */
 @font-face {
 	font-family: 'Manifesto';
-	src: url('../fonts/MANIFESTO.ttf');
+	src: url('../css/fonts/MANIFESTO.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito';
-	src: url('../fonts/Nunito-Light.ttf');
+	src: url('../css/fonts/Nunito-Light.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito-Thick';
-	src: url('../fonts/Nunito-Regular.ttf');
+	src: url('../css/fonts/Nunito-Regular.ttf');
 }
 
 /* Documents */
@@ -27,7 +27,7 @@ html, body {
 	overflow: hidden;
 }
 
-html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
+html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	margin: 0;
 	padding: 0;
 }
@@ -54,8 +54,23 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	font-size: 3vw;
 	font-family: 'Manifesto', 'Helvetica', 'sans-serif';
 	padding: 1vh 0.5vw;
-	border: 1.5px solid #333;
+	border: 1.1px solid #111;
 	display: inline-block;
+	color: #111;
+	/*font-weight: 700;*/
+}
+
+#sidebar #logo {
+	font-size: 1.2vw;
+	padding: 1vh 0.5vw;
+	border-color: #FAFAFA;
+	color: #FAFAFA;
+	margin: 3.6vh auto;
+}
+
+.logo-block {
+	background-color: #5FBABF;
+	text-align: center;
 }
 
 /* ********** */
@@ -65,7 +80,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 #banner {
 	height: 100%;
 	width: 100%;
-	background-image: url(../images/paintjob.jpg);
+	background-image: url(images/paintjob.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -321,20 +336,19 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 
 #sidebar {
 	height: 100vh;
-	box-shadow: 3px 0 6px #888;
+	box-shadow: 1px 0 6px #00000041;
 }
 
 #sidebar .navbar-nav {
 	height: 100%;
 	width: 100%;
 	margin: auto;
-	padding-top: 10%;
 }
 
 #sidebar svg {
 	height: 1.36em;
 	width: 1.36em;
-	fill: #FAFAFA;
+	fill: #5FBABF;
 	stroke-width: 2px;
 	margin-top: -5px;
 }
@@ -343,41 +357,74 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	width: 100%;
 }
 
-.active {
-	border-left: 3px solid #FAFAFA;
+.menu-item:hover, .bottom-nav:hover {
+	border: none;
+	background-color: #5FBABF;
 }
 
-@media only screen and (max-width: 992px) {
-	.active {
-		border: none;
-		border-top: 3px solid #FAFAFA;
-	}
-}
-
-.nav-link {
-	color: #FAFAFA;
-	text-align: left;
-	font-size: 1.1em;
-	letter-spacing: 0.5px;
-	padding: 16px 0 16px 16% !important;
-}
-
-.nav-link:hover, .bottom-nav:hover {
+.menu-item:hover .nav-link {
 	color: #FAFAFA;
 	text-decoration: none;
 }
 
-.nav-link * {
-	display: inline-block;
-	vertical-align: middle;
+#sidebar .menu-item:hover svg {
+	fill: #FAFAFA;
 }
 
-.nav-link span {
-	margin-left: 16px;
+.activeMenu {
+	border-left: 4px solid #5FBABF;
+}
+
+@media only screen and (max-width: 992px) {
+	.activeMenu {
+		border: none;
+		border-top: 3px solid #5FBABF;
+	}
+}
+
+.nav-link {
+	color: #5FBABF;
+	text-align: center;
+	font-size: 1vw;
+	letter-spacing: 0.5px;
+	padding: 8px 0;
+	margin: 16px 0;
+}
+
+.nav-tabs {
+	padding-top: 2vh;
+	width: 94%;
+	margin: auto;
+}
+
+.nav-tabs .nav-item {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tab {
+	padding: 8px 32px;
+	font-size: 1.1em;
+	margin-bottom: 0;
+}
+
+.tab:hover {
+	color: #666;
+}
+
+.active {
+	color: #5FBABF !important;
+	font-family: 'Nunito-Thick', 'Helvetica', 'sans-serif';
+}
+
+.nav-link * {
+	display: block;
+	vertical-align: middle;
+	margin: auto;
 }
 
 .bottom-nav {
-	color: #FAFAFA;
+	color: #5FBABF;
 	text-align: center;
 	padding: 12px 16px 8px;
 }
@@ -385,7 +432,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 #bottombar svg {
 	height: 1.6em;
 	width: 1.6em;
-	fill: #FAFAFA;
+	fill: #5FBABF;
 	stroke-width: 2px;
 	display: block;
 	margin: auto;
@@ -402,6 +449,14 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	#logo {
 		font-size: 3vh;
 	}
+
+	#sidebar #logo {
+		font-size: 1.2vh;
+	}
+
+	.nav-link {
+		font-size: 1.2vh;
+	}
 }
 
 /* ********* */
@@ -409,10 +464,11 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 /* ********* */
 
 #brickwall {
-	width: 100%;
+	width: 92%;
 	padding: 16px;
 	column-count: 3;
 	column-gap: 16px;
+	margin: auto;
 }
 
 /* Smaller than xl */
@@ -422,7 +478,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	}
 }
 
-/*  */
+/* Smaller than sm */
 @media only screen and (max-width: 576px) {
 	#brickwall {
 		column-count: 1;
@@ -432,11 +488,14 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 .brick {
 	display: inline-block;
 	width: 100%;
-	margin-bottom: 16px;
 	background-color: #FAFAFA;
 	position: relative;
 	text-align: left;
-	transition: outline 0.3s;
+	box-shadow: 0 1px 6px #00000041;
+}
+
+#brickwall .brick {
+	margin-bottom: 16px;
 }
 
 .brick:hover {
@@ -465,11 +524,18 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	-ms-backface-visibility:     hidden;
 }
 
+/* Project Section Brick */
+.wrapper .brick img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
 .dash-text-wrapper {
 	position: absolute;
 	left: 0;
 	top: 0;
-	padding: 10%;
+	padding: 8%;
 	line-height: 1.6;
 	opacity: 0;
 	transition: opacity 0.3s;
@@ -481,7 +547,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 }
 
 .dash-text-wrapper p {
-	font-size: 1vw;
+	font-size: 1.2vw;
 }
 
 .dash-text-wrapper p, .brick-creator {
@@ -511,7 +577,7 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	}
 
 	.dash-text-wrapper p {
-		font-size: 1.6vh;
+		font-size: 1.8vh;
 	}
 
 	.brick-creator {
@@ -684,12 +750,13 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 /* ******** */
 
 .wrapper {
+	width: 92%;
 	height: 100vh;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-	grid-auto-rows: 300px;
-	grid-gap: 10px;
-	margin: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	grid-auto-rows: 280px;
+	grid-gap: 24px;
+	margin: 24px auto;
 }
 
 .project {
@@ -698,10 +765,45 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	overflow: hidden;
 }
 
-.project img {
-	height: 100%;
-	width: 100%;
-	object-fit: cover;
+#addButton {
+	background-color: #5FBABF;
+	font-size: 2vw;
+	box-sizing: border-box;
+	padding: auto;
+	height: 4.2vw;
+	width: 4.2vw;
+	border-radius: 50%;
+	position: fixed;
+	right: 3vw;
+	bottom: 2vw;
+	box-shadow: 1px 2px 6px #666;
+	transition: transform 0.3s;
+}
+
+#hoverText {
+	opacity: 0;
+	background-color: #FAFAFA;
+	color: #111;
+	text-align: center;
+	border-radius: 6px 6px 0 6px;
+	padding: 8px;
+	position: absolute;
+	font-size: 0.4em;
+	bottom: 90%;
+	right: 105%;
+	text-transform: none;
+	transition: opacity 0.3s;
+	box-shadow: 1px 2px 6px #666;
+	pointer-events: none;
+}
+
+#addButton:hover {
+	color: #FAFAFA;
+	transform: scale(1.1);
+}
+
+#addButton:hover #hoverText {
+	opacity: 1;
 }
 
 /* Small than lg */
@@ -715,38 +817,6 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 /* ************ */
 /* Project View */
 /* ************ */
-
-#toptions {
-	width: 100%;
-	padding: 0 3vw;
-	position: absolute;
-	/*background: linear-gradient(#5FBABF, rgba(95, 186, 191, 0.7), rgba(0, 0, 0, 0));*/
-	background-color: #5FBABF;
-	margin-left: auto;
-}
-
-#toptions a, #toptions button {
-	color: #FAFAFA;
-	font-size: 1.2em;
-	margin-left: 32px;
-	padding: 8px 4px 4px 4px;
-}
-
-#toptions a {
-	float: left;
-}
-
-#toptions a:hover {
-	text-decoration: none;
-}
-
-#toptions button {
-	background-color: transparent;
-	border: none;
-	font-size: 2em;
-	float: right;
-	margin-top: -8px;
-}
 
 #project-banner {
 	position: relative;
@@ -835,4 +905,25 @@ html, body, .row, #section, #sidebar, #toptions, .navbar-nav {
 	line-height: 2.2;
 }
 
-/* Comments Section */
+#pageError {
+	height: 100vh;
+	width: 100vw;
+	padding-top: 20vh;
+	text-align: center;
+	color: #666;
+	font-size: 1.2em;
+	text-shadow: 0 1px 6px #00000041;
+	background-image: url(images/paintjob.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+#pageError #logo {
+	color: #666;
+	padding: 16px;
+	border-color: #666;
+	font-size: 3.2em;
+	text-shadow: 0 1px 6px #00000041;
+	box-shadow: 0 1px 6px #00000041;
+}
