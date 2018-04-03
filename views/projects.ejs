@@ -36,9 +36,11 @@
 			    </li>
 			    <li class="sidebar-account">
 			    	<span>
-			    		William Hong
+								<% if (user.length > 0) { %>
+									<%=user%>
+								<% } %>
 			    	</span>
-			    	<button class="btn">Logout</button>
+			    	<button class="btn" onclick="location.href='/logout';">Logout</button>
 			    </li>
 			</ul>
 		</nav>

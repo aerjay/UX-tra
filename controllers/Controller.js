@@ -115,7 +115,7 @@ Controller.dash = function(req, res) {
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
-		res.render('dashboard',{data: projs}); 
+		res.render('dashboard',{data: projs, user: req.user.username}); 
 	});
 };
 
@@ -133,6 +133,7 @@ Controller.proj = function(req, res){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
 		res.render('projects', {
+			user: req.user.username,
 			data: projs,
 			error: req.flash('error')
 		});
@@ -142,7 +143,7 @@ Controller.proj = function(req, res){
 Controller.addProj = function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
-	res.render('add-project', {error: req.flash('error')});
+	res.render('add-project', {user: req.user.username, error: req.flash('error')});
 };
 
 Controller.doProj =function(req, res){
