@@ -9,16 +9,9 @@ $(function() {
 		var wall = $('#brickwall');
 		let brick = $('<div class="brick">')
 		brick.css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
-		
-		var img = $("<img />").attr('src', proj.buff)
-		.on('load', function(){
-			if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
-				alert('broken image!');
-			} else {
-				brick.append(img);
-			}
-		});
-
+		date = new Date();
+		brick.append('<img src="' + proj.buff + '?'+ date.getTime() +'">');
+		location.reload();
 		let text = $('<div class="dash-text-wrapper">')
 		text.append($('<h3>').html(title));
 		text.append($('<p>').html(desc));
