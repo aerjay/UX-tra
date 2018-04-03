@@ -404,8 +404,18 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 
 .tab {
 	padding: 8px 32px;
-	font-size: 1.1em;
+	font-size: 1.1vw !important;
 	margin-bottom: 0;
+}
+
+@media only screen and (max-width: 768px) {
+	.tab {
+		font-size: 1.8vh !important;
+	}
+
+	.nav-tabs {
+		display: block;
+	}
 }
 
 .tab:hover {
@@ -635,6 +645,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	padding-bottom: 8vh;
+	margin-bottom: 8vh;
 }
 
 #content {
@@ -803,6 +814,8 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	bottom: 2vw;
 	box-shadow: 1px 2px 6px #666;
 	transition: transform 0.3s;
+	min-height: 64px;
+	min-width: 64px;
 }
 
 #hoverText {
@@ -836,6 +849,14 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	.wrapper {
 		grid-template-columns: repeat(auto-fill, minmax(324px, 1fr));
 		grid-auto-rows: 272px;
+	}
+
+	#addButton {
+		font-size: 4vh;
+		height: 8vh;
+		width: 8vh;
+		right: 3vh;
+		bottom: 12vh;
 	}
 }
 
