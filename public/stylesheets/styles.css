@@ -1,20 +1,21 @@
+
 /* Icons */
 /* https://fontawesome.com/license */
 
 /* Load Fonts */
 @font-face {
 	font-family: 'Manifesto';
-	src: url('../fonts/MANIFESTO.ttf');
+	src: url('../css/fonts/MANIFESTO.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito';
-	src: url('../fonts/Nunito-Light.ttf');
+	src: url('../css/fonts/Nunito-Light.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito-Thick';
-	src: url('../fonts/Nunito-Regular.ttf');
+	src: url('../css/fonts/Nunito-Regular.ttf');
 }
 
 /* Documents */
@@ -79,7 +80,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 #banner {
 	height: 100%;
 	width: 100%;
-	background-image: url(../images/paintjob.jpg);
+	background-image: url(images/paintjob.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -420,6 +421,25 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	display: block;
 	vertical-align: middle;
 	margin: auto;
+}
+
+.sidebar-account {
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	color: #5FBABF;
+}
+
+.sidebar-account span {
+	font-size: 1.1vw;
+}
+
+.sidebar-account .btn {
+	font-size: 1vw;
+}
+
+.sidebar-account * {
+	margin: 16px 0;
 }
 
 .bottom-nav {
@@ -918,7 +938,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	color: #666;
 	font-size: 1.2em;
 	text-shadow: 0 1px 6px #00000041;
-	background-image: url(../images/paintjob.jpg);
+	background-image: url(images/paintjob.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
