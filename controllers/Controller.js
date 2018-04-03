@@ -40,6 +40,10 @@ Controller.doRegister = function(req, res) {
 		}
 		User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
 		 // Create a verification token for this user
+		if(user === undefined){
+			req.flash("error", err.message);
+			return res.redirect('/'); 
+		}
 		user.token = crypto.randomBytes(16).toString('hex');
 
 		// Save the verification token
@@ -57,7 +61,7 @@ Controller.doRegister = function(req, res) {
 			text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation?token=' + user.token + '.\n' };
 			transporter.sendMail(mailOptions, function (info, err) {
 			if (err) { 
-				req.flash("error", "err.message");
+				req.flash("error", err.message);
 				return res.redirect('/'); 
 			}
 				req.flash("succ",'A verification email has been sent to ' +req.body.username+ '.' );
@@ -76,7 +80,8 @@ Controller.doRegister = function(req, res) {
 Controller.doLogin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err) { 	
-			return next(err); 
+			req.flash("error","Token Verification Failed");
+			return res.redirect('/');  
 		}
 		//check if the email is verified
 		User.findOne({ '_id': user._id}, function(err, user){
