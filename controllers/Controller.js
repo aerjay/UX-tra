@@ -105,7 +105,7 @@ Controller.doLogin = function(req, res, next) {
 };
 
 Controller.dash = function(req, res) {
-	if(!req.isAuthenticated())
+	if(req.user === undefined || !req.isAuthenticated())
 		res.redirect('/');
 
 	//get all of the projects and send it to the client
@@ -120,7 +120,7 @@ Controller.dash = function(req, res) {
 };
 
 Controller.proj = function(req, res){
-	if(!req.isAuthenticated())
+	if(req.user === undefined || !req.isAuthenticated())
 		res.redirect('/');
 	//get all of the projects and send it to the client
 	projs = [];
@@ -132,6 +132,7 @@ Controller.proj = function(req, res){
 		docs.forEach(function(entry){
 			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
 		});
+		
 		res.render('projects', {
 			user: req.user.username,
 			data: projs,
@@ -141,7 +142,7 @@ Controller.proj = function(req, res){
 };
 
 Controller.addProj = function(req, res){
-	if(!req.isAuthenticated())
+	if(req.user === undefined || !req.isAuthenticated())
 		res.redirect('/');
 	res.render('add-project', {user: req.user.username, error: req.flash('error')});
 };
