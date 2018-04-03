@@ -33,33 +33,33 @@ Controller.home = function(req, res) {
 
 // Post registration
 Controller.doRegister = function(req, res) {
-		if (req.body.password !== req.body.confirmation) {
-			//send error
-			req.flash("error", "Sign Up Failed");
-			return res.redirect('/');
-		}
-		User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
-		 // Create a verification token for this user
-		if(user === undefined){
-			req.flash("error", err.message);
+	if (req.body.password !== req.body.confirmation) {
+		//send error
+		req.flash("error", "Sign Up Failed");
+		return res.redirect('/');
+	}
+	User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
+	 // Create a verification token for this user
+	if(user === undefined){
+		req.flash("error", err.message);
+		return res.redirect('/'); 
+	}
+	user.token = crypto.randomBytes(16).toString('hex');
+
+	// Save the verification token
+	user.save(function (err) {
+		if (err) { 
+			req.flash("error", "err.message");
 			return res.redirect('/'); 
 		}
-		user.token = crypto.randomBytes(16).toString('hex');
-
-		// Save the verification token
-		user.save(function (err) {
-			if (err) { 
-				req.flash("error", "err.message");
-				return res.redirect('/'); 
-			}
 			// Send the email
 		var transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: 'noreply.uxtra@gmail.com', pass: 'winterseng513'} });
-			var mailOptions = { 
+		var mailOptions = { 
 			from: 'no-reply@uxtra.com', 
 			to: req.body.username, 
 			subject: 'Account Verification Token', 
 			text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation?token=' + user.token + '.\n' };
-			transporter.sendMail(mailOptions, function (info, err) {
+		transporter.sendMail(mailOptions, function (info, err) {
 			if (err) { 
 				req.flash("error", err.message);
 				return res.redirect('/'); 
@@ -105,46 +105,57 @@ Controller.doLogin = function(req, res, next) {
 };
 
 Controller.dash = function(req, res) {
-	if(req.user === undefined || !req.isAuthenticated())
+	if(!req.isAuthenticated())
 		res.redirect('/');
-
-	//get all of the projects and send it to the client
-	projs = [];
-	var query = {'pdata': { $exists: true}}; 
-	User.find(query, function(err, docs){
-		docs.forEach(function(entry){
-			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+	else{
+		//get all of the projects and send it to the client
+		projs = [];
+		var query = {'pdata': { $exists: true}}; 
+		User.find(query, function(err, docs){
+			docs.forEach(function(entry){
+				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+			});
+			if(req.user === undefined){
+				return res.redirect('/');
+			}
+			res.render('dashboard',{data: projs, user: req.user.username}); 
 		});
-		res.render('dashboard',{data: projs, user: req.user.username}); 
-	});
+	}
 };
 
 Controller.proj = function(req, res){
-	if(req.user === undefined || !req.isAuthenticated())
+	if(!req.isAuthenticated()){
 		res.redirect('/');
-	//get all of the projects and send it to the client
-	projs = [];
-	var query = {'username': req.user.username, 'pdata': { $exists: true}}; 
-	User.find(query, function(err, docs){
-		if (err) { 	
-			return next(err); 
-		}
-		docs.forEach(function(entry){
-			projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+	}
+	else{
+		//get all of the projects and send it to the client
+		projs = [];
+		var query = {'username': req.user.username, 'pdata': { $exists: true}}; 
+		User.find(query, function(err, docs){
+			if (err) { 	
+				return next(err); 
+			}
+			docs.forEach(function(entry){
+				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+			});
+			if(req.user === undefined){
+				return res.redirect('/');
+			}
+			res.render('projects', {
+				user: req.user.username,
+				data: projs,
+				error: req.flash('error')
+			});
 		});
-		
-		res.render('projects', {
-			user: req.user.username,
-			data: projs,
-			error: req.flash('error')
-		});
-	});
+	}
 };
 
 Controller.addProj = function(req, res){
 	if(req.user === undefined || !req.isAuthenticated())
 		res.redirect('/');
-	res.render('add-project', {user: req.user.username, error: req.flash('error')});
+	else{
+		res.render('add-project', {user: req.user.username, error: req.flash('error')});
+	}
 };
 
 Controller.doProj =function(req, res){
