@@ -26,8 +26,11 @@ router.get('/logout', auth.logout);
 //route for project
 router.get('/proj', auth.proj);
 
-//route for project action
+//route for add project action
 router.post('/proj', auth.doProj);
+
+//route for add project 
+router.get('/addproj', auth.addProj)
 
 //email confirmation
 router.get('/confirmation', auth.doConfirmation);
