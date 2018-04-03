@@ -188,12 +188,15 @@ Controller.doConfirmation = function(req, res){
             // Verify and save the user
         user.isVerified = true;
         user.save(function (err) {
-		if (err) { 
-			req.flash("error", "err.message");
-			return res.redirect('/'); 
-		}
-		req.flash("succ", "Account has been verified, Please log in.");
-		res.redirect('/');
+			if (err) { 
+				req.flash("error", "err.message");
+				return res.redirect('/'); 
+			}
+			req.flash("succ", "Account has been verified, Please log in.");
+			res.render('login', {
+				succ: req.flash('succ'),
+				error: req.flash('error')
+			});
         });
     });
 };
