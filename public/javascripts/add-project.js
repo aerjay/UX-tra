@@ -1,3 +1,5 @@
+import {$,jQuery} from 'jquery';
+
 $(function() {
   var $fileInput = $('.file-input');
   var $droparea = $('.file-drop-area');

@@ -18,7 +18,10 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 app.set('Myserver',http);
+//needs to remove sometime lols
 app.set('socketio', io);
+
+var events = require('./events/event')(io);
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://toconnect:connect@ds113169.mlab.com:13169/uxtra')
@@ -53,10 +56,6 @@ var User = require('./models/User');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-io.on('connection', function(socket){
-	console.log(':::socketio::: user: ', socket.request.user.username);
-});
 
 app.use(fileupload({ limits: { filesize: 15 * 1024 *1024}, safeFileNames: true, preserveExtension: true, abortOnLimit: true}));
 // view engine setup

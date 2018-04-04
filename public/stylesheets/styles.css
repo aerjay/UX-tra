@@ -5,17 +5,17 @@
 /* Load Fonts */
 @font-face {
 	font-family: 'Manifesto';
-	src: url('../css/fonts/MANIFESTO.ttf');
+	src: url('../fonts/MANIFESTO.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito';
-	src: url('../css/fonts/Nunito-Light.ttf');
+	src: url('../fonts/Nunito-Light.ttf');
 }
 
 @font-face {
 	font-family: 'Nunito-Thick';
-	src: url('../css/fonts/Nunito-Regular.ttf');
+	src: url('../fonts/Nunito-Regular.ttf');
 }
 
 /* Documents */
@@ -469,6 +469,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 }
 
 #bottombar span {
+	text-decoration: none;
 	font-size: 0.8em;
 	letter-spacing: 0.5px;
 }
@@ -959,7 +960,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	color: #666;
 	font-size: 1.2em;
 	text-shadow: 0 1px 6px #00000041;
-	background-image: url(images/paintjob.jpg);
+	background-image: url(../images/paintjob.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
