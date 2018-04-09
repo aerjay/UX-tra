@@ -18,9 +18,21 @@ router.post('/register', auth.doRegister);
 router.post('/login', auth.doLogin);
 
 // route for login 
-router.post('/login', auth.home);
+router.get('/login', auth.home);
 
 // route for logout action
 router.get('/logout', auth.logout);
+
+//route for project
+router.get('/proj', auth.proj);
+
+//route for add project action
+router.post('/proj', auth.doProj);
+
+//route for add project 
+router.get('/addproj', auth.addProj)
+
+//email confirmation
+router.get('/confirmation', auth.doConfirmation);
 
 module.exports = router;
