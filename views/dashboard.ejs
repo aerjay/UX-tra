@@ -57,9 +57,84 @@
 			<div id="brickwall" class="container-fluid">
 				<!-- THIS CHANGES WHEN MOVING ON DIFFERENT PAGES-->
 			</div>
-			<button id="addButton" class="btn" onclick="location.href='/addproj';">+
+			<button id="addButton" class="btn">+
 				<span id="hoverText">Add Project</span>
 			</button>
+				  <div id="content" class="container">
+				  <form action="/proj" method="post" enctype="multipart/form-data">
+					  <!-- Basic Information Section -->
+					  <div class="container-fluid section-container">
+						  <label class="section-form-header">STEP 1: THE BASICS</label>
+						  <div class="form-group form-inline">
+							  <h4 class="form-label">Project Name</h4>
+							  <input type="text" class="form-control" name="projname" placeholder="Enter your project name">
+						  </div>
+	  
+						  <div class="form-group form-inline">
+							  <h4 class="form-label">TAGS</h4>
+							  <textarea type="text" class="form-text-box form-control" name="tags" rows="3" placeholder="ex. #web #mobile #game #cats #android #ios"></textarea>
+						  </div>
+	  
+						  <div class="form-group form-inline">
+							  <h4 class="form-label">Description</h4>
+							  <textarea type="text" class="form-text-box form-control" name="des" rows="5" placeholder="Enter your project description here"></textarea>
+						  </div>
+					  </div>
+	  
+					  <!-- Upload Project Section -->
+					  <div class="container-fluid section-container">
+						  <label class="section-form-header">STEP 2: UPLOAD YOUR PROJECT</label>
+						  <div class="d-xl-block d-none">
+							  <div class="file-drop-area">
+								<div class="file-drop-items">
+								  <span class="btn">Choose files</span>
+								  <span class="file-msg js-set-number"> or drag and drop a file here</span>
+								</div>
+								<input class="file-input" type="file" name="file" id="file">
+							  </div>
+						  </div>
+						  <label class="btn d-xl-none" style="display: block;">
+							  Choose files <input type="file"name="file" style="display: none;">
+						  </label>
+					  </div>	
+					  <!-- Privacy & Visibility -->
+					  <div class="container-fluid section-container">
+						  <label class="section-form-header">STEP 3: PRIVACY &amp; VISIBILITY</label>
+						  <div class="form-group form-inline">
+							  <h4 class="form-label">WHO CAN SEE?</h4>
+							  <select class="form-control form-select">
+								  <option>Everyone</option>
+								  <option>Some users</option>
+								  <option>Only Me</option>
+							  </select>
+						  </div>
+	  
+						  <div class="form-group form-inline">
+							  <h4 class="form-label">WHO CAN REVIEW?</h4>
+							  <select class="form-control form-select">
+								  <option>Everyone</option>
+								  <option>Some users</option>
+								  <option>Only Me</option>
+							  </select>
+						  </div>
+					  </div>
+	  
+					  <div class="container-fluid section-container">
+						  <label class="section-form-header">STEP 4: PUBLISH</label>
+						  <p class="section-text">Donec dapibus ante sit amet turpis tristique sodales vitae nec ex. Duis nec commodo leo, ac tincidunt augue. Duis vel nulla turpis. Cras commodo nibh scelerisque, ultrices orci eu, convallis felis. Pellentesque eget porta quam, ac euismod diam. Donec in diam in justo euismod vestibulum. Phasellus sit amet interdum magna. Nunc vulputate sem diam, ac vulputate nisl gravida molestie. Proin efficitur est sed neque elementum, in tempor neque euismod. Donec ultrices mauris ac leo tempus, quis sagittis ex elementum. Etiam ut ante leo.</p>
+	  
+						  <div class="section-button-group row">
+							  <label class="form-check-label form-text col-lg-5 col-12">
+								  <input class="form-check-input form-text" type="checkbox" name="iagree"> I agree to the <a href="" style="text-decoration: underline;">Terms and Conditions</a>
+							  </label>
+							  
+							  <button type="submit" value="Upload" class="btn btn-form col-lg-2 col-12">PUBLISH</button>
+							  <button type="button" class="btn btn-form col-lg-2 col-12">SAVE</button>
+							  <button type="button" class="btn btn-form col-lg-2 col-12">CANCEL</button>
+						  </div>
+					  </div>
+				  </form>
+				  </div>
 		</div>
 
 	</div>
