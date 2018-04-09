@@ -5,10 +5,13 @@ $(function() {
 	//user clicks home, user clicks project, user clicks add project
 	
 	//desktop
+	$("#addButton").hide();
 	$('#home').click(function(){
 		if(!$('#home').hasClass("activeMenu")){
 			$('#project').removeClass("activeMenu");
 			$('#home').addClass("activeMenu");
+			$("#brickwall").empty();
+			$("#addButton").hide();
 		}
 		socket.emit('gotoHome');
 	});
@@ -17,6 +20,7 @@ $(function() {
 		$('#home').removeClass("activeMenu");
 		$('#project').addClass("activeMenu");
 		$("#brickwall").empty();
+		$("#addButton").show();
 		socket.emit('gotoProj');
 	});
 
@@ -40,8 +44,8 @@ $(function() {
 	});
 
 	socket.on('ldProjs', function(data){
+		console.log(data.data.length);
 		 if (data.data.length > 0) {
-			$("#brickwall").empty();
 			for (let proj of data.data) {
 				var title = proj.proj;
 				var desc = proj.des;
@@ -64,7 +68,6 @@ $(function() {
 	});
 	
 	socket.on('addProj', function(proj){
-		$("#brickwall").empty();
 		console.log("get something from server");
 		console.log(proj);
 		var title = proj.proj;
@@ -84,4 +87,6 @@ $(function() {
 		// Add brick to wall
 		wall.append(brick);
 	});
+
+	$('<div class="brick">').css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
 });
