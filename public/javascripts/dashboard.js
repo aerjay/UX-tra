@@ -6,12 +6,14 @@ $(function() {
 	
 	//desktop
 	$("#addButton").hide();
+	$("#content").hide();
 	$('#home').click(function(){
 		if(!$('#home').hasClass("activeMenu")){
 			$('#project').removeClass("activeMenu");
 			$('#home').addClass("activeMenu");
-			$("#brickwall").empty();
+			$("#brickwall").show();
 			$("#addButton").hide();
+			$("#content").hide();
 		}
 		socket.emit('gotoHome');
 	});
@@ -19,8 +21,9 @@ $(function() {
 	$('#project').click(function(){
 		$('#home').removeClass("activeMenu");
 		$('#project').addClass("activeMenu");
-		$("#brickwall").empty();
+		$("#brickwall").show();
 		$("#addButton").show();
+		$("#content").hide();
 		socket.emit('gotoProj');
 	});
 
@@ -40,12 +43,15 @@ $(function() {
 
 	//both mobile and desktop
 	$('#addButton').click(function(){
-		socket.emit('gotoAddProj');
+		$("#addButton").hide();
+		$("#brickwall").hide();
+		$("#content").show();
 	});
 
 	socket.on('ldProjs', function(data){
 		console.log(data.data.length);
 		 if (data.data.length > 0) {
+			$("#brickwall").empty();
 			for (let proj of data.data) {
 				var title = proj.proj;
 				var desc = proj.des;
@@ -68,6 +74,7 @@ $(function() {
 	});
 	
 	socket.on('addProj', function(proj){
+		$("#brickwall").empty();
 		console.log("get something from server");
 		console.log(proj);
 		var title = proj.proj;

@@ -15,7 +15,14 @@ module.exports = function(io){
 
         socket.on('gotoHome', function(){
             console.log('home event');
-            socket.emit('ldProjs', {data: projs});
+            projs = [];
+            var query = {'pdata': { $exists: true}}; 
+            User.find(query, function(err, docs){
+                docs.forEach(function(entry){
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+                });
+                socket.emit('ldProjs', {data: projs});
+            });
         });
 
         socket.on('gotoProj', function(){
@@ -40,3 +47,5 @@ module.exports = function(io){
         });
     });
 };
+
+
