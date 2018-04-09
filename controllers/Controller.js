@@ -117,12 +117,13 @@ Controller.dash = function(req, res) {
 			});
 			if(req.user === undefined){
 				return res.redirect('/');
-			}
+			}	
 			res.render('dashboard',{data: projs, user: req.user.username}); 
 		});
 	}
 };
 
+//nees to be removed
 Controller.proj = function(req, res){
 	if(!req.isAuthenticated()){
 		res.redirect('/');
@@ -150,6 +151,7 @@ Controller.proj = function(req, res){
 	}
 };
 
+//needs to remove
 Controller.addProj = function(req, res){
 	if(req.user === undefined || !req.isAuthenticated())
 		res.redirect('/');
@@ -158,10 +160,10 @@ Controller.addProj = function(req, res){
 	}
 };
 
+//do add project
 Controller.doProj =function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
-	//get the user's email
 	var io = req.app.get('socketio');
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
