@@ -74,7 +74,6 @@ $(function() {
 	});
 	
 	socket.on('addProj', function(proj){
-		$("#brickwall").empty();
 		console.log("get something from server");
 		console.log(proj);
 		var title = proj.proj;
