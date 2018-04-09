@@ -109,54 +109,7 @@ Controller.dash = function(req, res) {
 		res.redirect('/');
 	else{
 		//get all of the projects and send it to the client
-		projs = [];
-		var query = {'pdata': { $exists: true}}; 
-		User.find(query, function(err, docs){
-			docs.forEach(function(entry){
-				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
-			});
-			if(req.user === undefined){
-				return res.redirect('/');
-			}	
-			res.render('dashboard',{data: projs, user: req.user.username}); 
-		});
-	}
-};
-
-//nees to be removed
-Controller.proj = function(req, res){
-	if(!req.isAuthenticated()){
-		res.redirect('/');
-	}
-	else{
-		//get all of the projects and send it to the client
-		projs = [];
-		var query = {'username': req.user.username, 'pdata': { $exists: true}}; 
-		User.find(query, function(err, docs){
-			if (err) { 	
-				return next(err); 
-			}
-			docs.forEach(function(entry){
-				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
-			});
-			if(req.user === undefined){
-				return res.redirect('/');
-			}
-			res.render('projects', {
-				user: req.user.username,
-				data: projs,
-				error: req.flash('error')
-			});
-		});
-	}
-};
-
-//needs to remove
-Controller.addProj = function(req, res){
-	if(req.user === undefined || !req.isAuthenticated())
-		res.redirect('/');
-	else{
-		res.render('add-project', {user: req.user.username, error: req.flash('error')});
+		res.render('dashboard'); 
 	}
 };
 
@@ -180,16 +133,15 @@ Controller.doProj =function(req, res){
 				if(err){
 					console.log("db not updated");
 					req.flash("error", "Upload Failed");
-					res.redirect('/addproj');
 				}
 			console.log("update others");
 			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
-			res.redirect('/proj');
+			res.redirect('/');
 			});
 		}
 		else{
 			req.flash("error", "Upload Failed");
-			res.redirect('/addproj');
+			res.redirect('/');
 		}
 	});
 };
