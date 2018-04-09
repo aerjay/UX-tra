@@ -58,7 +58,7 @@ Controller.doRegister = function(req, res) {
 			from: 'no-reply@uxtra.com', 
 			to: req.body.username, 
 			subject: 'Account Verification Token', 
-			text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation?token=' + user.token + '.\n' };
+			text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation?token=' + user.token + '\n' };
 		transporter.sendMail(mailOptions, function (info, err) {
 			if (err) { 
 				req.flash("error", err.message);
