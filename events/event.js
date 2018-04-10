@@ -11,20 +11,21 @@ module.exports = function(io){
 			docs.forEach(function(entry){
 				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
             });
+            console.log(projs.length);
             socket.emit('updateDash', {data: projs});
-        });
 
-        projs = [];
-        var query = {'username': socket.request.user.username, 'pdata': { $exists: true}}; 
-        User.find(query, function(err, docs){
-            if (err) {  
-                return next(err); 
-            }
-            docs.forEach(function(entry){
-                projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+            proj = [];
+            var query = {'username': socket.request.user.username, 'pdata': { $exists: true}}; 
+            User.find(query, function(err, docs){
+                if (err) {  
+                    return next(err); 
+                }
+                docs.forEach(function(entry){
+                    proj.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+                });
+                console.log("updateUser");
+                socket.emit('updateUser', {data: proj});
             });
-            console.log("updateUser");
-            socket.emit('updateUser', {data: projs});
         });
 
         // Public Projects

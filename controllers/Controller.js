@@ -118,13 +118,6 @@ Controller.doProj =function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
 	var io = req.app.get('socketio');
-	var sockets = Object.keys(io.sockets.connected);
-	console.log(sockets);
-	console.log(req.cookies.io);
-	var i = sockets.indexOf(req.cookies.io);
-	if(i > -1)
-		sockets.splice(i,1);
-	console.log(sockets);
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		//get the project's info and uploaded image save it as a string in db
@@ -142,9 +135,7 @@ Controller.doProj =function(req, res){
 					req.flash("error", "Upload Failed");
 				}
 			console.log("update others");
-			for(var i =0; i < sockets.length; i++){
-				io.to(sockets[i]).emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
-			}
+			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
 			res.redirect('/');
 			});
 		}
