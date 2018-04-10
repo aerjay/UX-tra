@@ -124,6 +124,7 @@ Controller.doProj =function(req, res){
 	var i = sockets.indexOf(req.cookies.io);
 	if(i > -1)
 		sockets.splice(i,1);
+	console.log(sockets);
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		//get the project's info and uploaded image save it as a string in db
@@ -142,7 +143,7 @@ Controller.doProj =function(req, res){
 				}
 			console.log("update others");
 			for(var i =0; i < sockets.length; i++){
-				io.sockets.connected[sockets[i]].emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+				io.to(sockets[i]).emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
 			}
 			res.redirect('/');
 			});
