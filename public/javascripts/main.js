@@ -111,7 +111,6 @@ $(function() {
 			brick.css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
 		}
 		
-		proj.buff = JSON.parse(proj.buff);
 		brick.append('<img src="' + proj.buff +'">');
 		let text = $('<div class="dash-text-wrapper">')
 		text.append($('<h3>').html(title));

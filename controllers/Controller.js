@@ -124,7 +124,6 @@ Controller.doProj =function(req, res){
 		if(!err && req.files.file !== undefined && doc.pdata === undefined){
 			var img = new Buffer(req.files.file.data).toString('base64'); 
 			img =  "data:" + req.files.file.mimetype + ';base64,' +img;
-			img = JSON.stringify(img);
 			doc.pdata = img;
 			doc.pdes = req.body.des;
 			doc.pname = req.body.projname;
