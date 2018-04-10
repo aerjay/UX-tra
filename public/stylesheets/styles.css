@@ -33,7 +33,6 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 }
 
 #sidebar, #bottombar {
-	position: relative;
 	z-index: 1;
 }
 
@@ -342,6 +341,7 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 #sidebar {
 	height: 100vh;
 	box-shadow: 1px 0 6px #00000041;
+	position: relative;
 }
 
 #sidebar .navbar-nav {

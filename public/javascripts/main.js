@@ -59,7 +59,7 @@ $(function() {
 	});
 
 	// Cancel Button
-	$('cancelButton').click(function() {
+	$('#cancelButton').click(function() {
 		active = 'project';
 
 		$(".wrapper").show();
