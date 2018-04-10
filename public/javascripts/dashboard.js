@@ -1,5 +1,6 @@
 $(function() {
 	var socket = io();
+	var current = 'home';
 
 	//needs to emit an event when the user clicks different pages
 	//user clicks home, user clicks project, user clicks add project
@@ -7,11 +8,14 @@ $(function() {
 	//desktop
 	$("#addButton").hide();
 	$("#content").hide();
+	$(".wrapper").hide();
+
 	$('#home').click(function(){
-		if(!$('#home').hasClass("activeMenu")){
-			$('#project').removeClass("activeMenu");
-			$('#home').addClass("activeMenu");
+		if(!$('#home a').hasClass("activeMenu")){
+			$('#project a').removeClass("activeMenu");
+			$('#home a').addClass("activeMenu");
 			$("#brickwall").show();
+			$(".wrapper").hide();
 			$("#addButton").hide();
 			$("#content").hide();
 		}
@@ -19,9 +23,11 @@ $(function() {
 	});
 
 	$('#project').click(function(){
-		$('#home').removeClass("activeMenu");
-		$('#project').addClass("activeMenu");
-		$("#brickwall").show();
+
+		$('#home a').removeClass("activeMenu");
+		$('#project a').addClass("activeMenu");
+		$(".wrapper").show();
+		$("#brickwall").hide();
 		$("#addButton").show();
 		$("#content").hide();
 		socket.emit('gotoProj');
@@ -41,23 +47,22 @@ $(function() {
 		socket.emit('gotoProj');
 	});
 
-	//both mobile and desktop
 	$('#addButton').click(function(){
 		$("#addButton").hide();
 		$("#brickwall").hide();
+		$(".wrapper").hide();
 		$("#content").show();
 	});
 
 	socket.on('ldProjs', function(data){
 		console.log(data.data.length);
 		 if (data.data.length > 0) {
-			$("#brickwall").empty();
 			for (let proj of data.data) {
 				var title = proj.proj;
 				var desc = proj.des;
 				var author = proj.auth;
 				var wall = $('#brickwall');
-				let brick = $('<div class="brick">')
+				let brick = $('<div class="brick">');
 				brick.css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
 				proj.buff = JSON.parse(proj.buff);
 				brick.append('<img src="' + proj.buff +'">');
@@ -93,6 +98,4 @@ $(function() {
 		// Add brick to wall
 		wall.append(brick);
 	});
-
-	$('<div class="brick">').css('max-height', (Math.floor(Math.random() * 120) + 300) + 'px');
 });
