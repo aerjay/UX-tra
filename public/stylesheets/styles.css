@@ -1008,5 +1008,4 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 #splash img {
 	margin-top: 30vh;
 	object-position: center;
-	content: url('../images/loading.gif');
 }
