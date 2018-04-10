@@ -118,10 +118,15 @@ Controller.doProj =function(req, res){
 	if(!req.isAuthenticated())
 		res.redirect('/');
 	var io = req.app.get('socketio');
+	var sockets = Object.keys(io.sockets.connected);
+	console.log(sockets);
+	var i = sockets.indexOf(req.cookies.io);
+	if(i > -1)
+		sockets.splice(i,1);
 	var query = {'username': req.user.username}; 
 	User.findOne(query, function (err, doc) {
 		//get the project's info and uploaded image save it as a string in db
-		if(!err && req.files.file !== undefined){
+		if(!err && req.files.file !== undefined && doc.pdata === undefined){
 			var img = new Buffer(req.files.file.data).toString('base64'); 
 			img =  "data:" + req.files.file.mimetype + ';base64,' +img;
 			img = JSON.stringify(img);
@@ -135,7 +140,9 @@ Controller.doProj =function(req, res){
 					req.flash("error", "Upload Failed");
 				}
 			console.log("update others");
-			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+			for(var i =0; i < sockets.length; i++){
+				io.sockets.connected[i].emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+			}
 			res.redirect('/');
 			});
 		}

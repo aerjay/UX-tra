@@ -73,6 +73,7 @@ $(function() {
 	socket.on('updateDash', function(data){
 		console.log(data.data.length);
 		 if (data.data.length > 0) {
+			 $('#brickwall').empty();
 			for (let proj of data.data) {
 				updateView('#brickwall', proj);
 			}
@@ -83,6 +84,7 @@ $(function() {
 	socket.on('updateUser', function(data) {
 		console.log(data.data.length);
 		if (data.data.length > 0) {
+			$('.wrapper').empty();
 			for (let proj of data.data) {
 				updateView('.wrapper', proj);
 			}
