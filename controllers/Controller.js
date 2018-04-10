@@ -120,6 +120,7 @@ Controller.doProj =function(req, res){
 	var io = req.app.get('socketio');
 	var sockets = Object.keys(io.sockets.connected);
 	console.log(sockets);
+	console.log(req.cookies.io);
 	var i = sockets.indexOf(req.cookies.io);
 	if(i > -1)
 		sockets.splice(i,1);
