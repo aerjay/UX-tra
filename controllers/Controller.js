@@ -142,7 +142,7 @@ Controller.doProj =function(req, res){
 				}
 			console.log("update others");
 			for(var i =0; i < sockets.length; i++){
-				io.sockets.connected[i].emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+				io.sockets.connected[sockets[i]].emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
 			}
 			res.redirect('/');
 			});
