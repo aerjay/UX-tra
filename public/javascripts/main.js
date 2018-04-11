@@ -69,6 +69,9 @@ $(function() {
 		$("#content").hide();
 	});
 
+	//must add a add vote button
+	//where it will emit 'incVote' (which takes the project name as an arg) to the server to increment the vote 
+
 	// Update dashboard with projects
 	socket.on('updateDash', function(data){
 		console.log(data.data.length);

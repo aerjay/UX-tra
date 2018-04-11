@@ -127,14 +127,14 @@ Controller.doProj =function(req, res){
 			doc.pdata = img;
 			doc.pdes = req.body.des;
 			doc.pname = req.body.projname;
-
+			doc.pvote = 0;
 			doc.save(function(err){
 				if(err){
 					console.log("db not updated");
 					req.flash("error", "Upload Failed");
 				}
 			console.log("update others");
-			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username});
+			io.emit('addProj',{proj: req.body.projname, buff: img, des: req.body.des, auth: req.user.username, vote: doc.pvote});
 			res.redirect('/');
 			});
 		}

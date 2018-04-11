@@ -15,6 +15,7 @@ let schema = new Schema({
 	pname: String, 
 	pdata: String,
 	pdes: String,
+	pvote: Number,
 	isVerified: { type: Boolean, default: false },
 	token: { type: String }
 });

@@ -5,37 +5,16 @@ module.exports = function(io){
         console.log('login user: ', socket.request.user.username);
         
         // On init, load both dash and projs
-        projs = [];
-		var query = {'pdata': { $exists: true}}; 
-		User.find(query, function(err, docs){
-			docs.forEach(function(entry){
-				projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
-            });
-            console.log(projs.length);
-            socket.emit('updateDash', {data: projs});
-
-            proj = [];
-            var query = {'username': socket.request.user.username, 'pdata': { $exists: true}}; 
-            User.find(query, function(err, docs){
-                if (err) {  
-                    return next(err); 
-                }
-                docs.forEach(function(entry){
-                    proj.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
-                });
-                console.log("updateUser");
-                socket.emit('updateUser', {data: proj});
-            });
-        });
+        updateWho(socket);
 
         // Public Projects
         socket.on('ldPublic', function(){
             console.log('home event');
             projs = [];
             var query = {'pdata': { $exists: true}}; 
-            User.find(query, function(err, docs){
+            User.find(query, null, {sort: '-pvote'}, function(err, docs){
                 docs.forEach(function(entry){
-                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
                 });
                 console.log("updateDash");
                 socket.emit('updateDash', {data: projs});
@@ -53,12 +32,51 @@ module.exports = function(io){
                     return next(err); 
                 }
                 docs.forEach(function(entry){
-                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username});
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
                 });
                 console.log("updateUser");
                 socket.emit('updateUser', {data: projs});
             });
         });
+
+        // Increment the vote of a project
+        socket.on('incVote', function(pname){
+            var query = {'pname': pname}; 
+            User.findOne(query, function(err, doc){
+                if (err) { 	
+                    return next(err); 
+                }
+                doc.pvote = doc.pvote + 1;
+                doc.save();
+            });
+            //update everyone
+            updateWho(io);
+        });
+
+        function updateWho(i){
+            projs = [];
+            var query = {'pdata': { $exists: true}}; 
+            User.find(query, null, {sort: '-pvote'},function(err, docs){
+                docs.forEach(function(entry){
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                });
+                console.log(projs.length);
+                i.emit('updateDash', {data: projs});
+    
+                proj = [];
+                var query = {'username': socket.request.user.username, 'pdata': { $exists: true}}; 
+                User.find(query, function(err, docs){
+                    if (err) {  
+                        return next(err); 
+                    }
+                    docs.forEach(function(entry){
+                        proj.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                    });
+                    console.log("updateUser");
+                    i.emit('updateUser', {data: proj});
+                });
+            });
+        }
     });
 };
 
