@@ -26,6 +26,7 @@ $(function() {
 			$(".wrapper").hide();
 			$("#addButton").hide();
 			$("#content").hide();
+			$('#tabloid').hide();
 		}
 	});
 
@@ -44,6 +45,7 @@ $(function() {
 
 			$("#brickwall").hide();
 			$("#content").hide();
+			$('#tabloid').hide();
 		}
 	});
 
@@ -56,6 +58,7 @@ $(function() {
 		$("#brickwall").hide();
 		$(".wrapper").hide();
 		$("#addButton").hide();
+		$('#tabloid').hide();
 	});
 
 	// Cancel Button
@@ -67,6 +70,18 @@ $(function() {
 
 		$("#brickwall").hide();
 		$("#content").hide();
+		$('#tabloid').hide();
+	});
+	
+	// Click any project
+	$(".brick").click(function() {
+
+		$('#tabloid').show();
+
+		$('#brickwall').hide();
+		$('.wrapper').hide();
+		$('#content').hide();
+		$('#addButton').hide();
 	});
 
 	//must add a add vote button
