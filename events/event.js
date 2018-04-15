@@ -14,7 +14,8 @@ module.exports = function(io){
             var query = {'pdata': { $exists: true}}; 
             User.find(query, null, {sort: '-pvote'}, function(err, docs){
                 docs.forEach(function(entry){
-                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, 
+                        vote: entry.pvote, comment: entry.pcomment.body, commenter: entry.pcomment.commenter});
                 });
                 console.log("updateDash");
                 socket.emit('updateDash', {data: projs});
@@ -32,7 +33,8 @@ module.exports = function(io){
                     return next(err); 
                 }
                 docs.forEach(function(entry){
-                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, 
+                        vote: entry.pvote, comment: entry.pcomment.body, commenter: entry.pcomment.commenter});
                 });
                 console.log("updateUser");
                 socket.emit('updateUser', {data: projs});
@@ -53,12 +55,36 @@ module.exports = function(io){
             updateWho(io);
         });
 
+        //DRAFT IF WE ADD COMMENT 
+        //this function takes a project as an input
+        //the project has a pname which is the name of the project
+        //the project also contains the comment to that project
+        
+        // to access the comment for a project
+        // do: 
+        // ().pcomment.body -- comment
+        // ().pcomment.commenter 
+        socket.io('addComment', function(proj){
+            var query = {'pname': proj.pname}; 
+            User.findOne(query, function(err, doc){
+                if (err) { 	
+                    return next(err); 
+                }
+                doc.pcomment.commenter = socket.request.user.username;
+                doc.pcomment.body = proj.comment;
+                doc.save();
+            });
+            //update everyone
+            updateWho(io);
+        });
+
         function updateWho(i){
             projs = [];
             var query = {'pdata': { $exists: true}}; 
             User.find(query, null, {sort: '-pvote'},function(err, docs){
                 docs.forEach(function(entry){
-                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                    projs.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, 
+                        vote: entry.pvote, comment: entry.pcomment.body, commenter: entry.pcomment.commenter});
                 });
                 console.log(projs.length);
                 i.emit('updateDash', {data: projs});
@@ -70,7 +96,8 @@ module.exports = function(io){
                         return next(err); 
                     }
                     docs.forEach(function(entry){
-                        proj.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, vote: entry.pvote});
+                        proj.push({proj: entry.pname, buff: entry.pdata, des: entry.pdes, auth: entry.username, 
+                            vote: entry.pvote, comment: entry.pcomment.body, commenter: entry.pcomment.commenter});
                     });
                     console.log("updateUser");
                     i.emit('updateUser', {data: proj});
