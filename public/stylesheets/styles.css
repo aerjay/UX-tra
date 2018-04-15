@@ -872,94 +872,52 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 /* Project View */
 /* ************ */
 
-#project-banner {
-	position: relative;
-	width: 100%;
-	height: 72vh;
-	background-attachment: fixed;
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+#tabloid {
+	width: 92%;
+	height: 100%;
+	padding: 8vh 8vw;
+	margin: auto;
 }
 
-#project-banner h1 {
-	color: #FAFAFA;
-	font-weight: 300;
-	/*background-color: rgba(250, 250, 250, 0.6);*/
-	background-color: #5FBABF;
-	display: inline-block;
-	padding: 16px 32px;
-	margin: 0;
-	position: absolute;
-	bottom: 0;
-	left: 0;
+#tabloid * {
+	margin-bottom: 32px;
 }
 
-/* Tags */
-#project-tags {
-	display: block;
-	overflow-y: hidden;
-	background-color: #5FBABF;
+.project-name {
+	text-align: center;
+	text-decoration: underline;
 }
 
-#project-tags a {
-	color: #FAFAFA;
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
-	font-size: 0.64em;
+.project-img {
+	max-width: 60%;
+	height: auto;
+	margin: auto;
 }
 
-/* Everything below poverty line */
-#project-content {
-	color: #3F3F3F;
-	margin: 2vh 2vw;
-	font-size: 1.05em;
+.project-info {
+	max-width: 60%;
+	margin: auto;
 }
 
-/* Profile Image and Name of Creator */
-#project-creator {
-	padding: 24px 16px 16px 32px;
-	display: inline-block;
-	float: left;
+.project-info-item {
+	float: right;
+	margin: 4px 8px;
 }
 
-#project-creator img {
-	height: 72px;
-	width: 72px;
-	border-radius: 50%;
-	object-fit: cover;
-}
-
-#project-creator div {
-	display: inline-block;
-	padding: 16px;
-	vertical-align: middle;
-	line-height: 2;
-}
-
-#project-creator * {
-	margin: 0;
-}
-
-#project-creator a {
-	color: #3F3F3F;
-}
-
-#project-creator a:hover {
-	color: #666;
-}
-
-#project-creator p {
-	font-size: 0.8em;
-}
-
-#project-text {
-	padding: 16px 32px;
+.project-desc {
+	max-width: 60%;
 	line-height: 2.2;
+	margin: auto;
 }
 
-#brickwall, #content, .wrapper {
+.corner-btn {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	font-size: 2em;
+}
+
+#brickwall, #content, .wrapper, #tabloid {
 	padding-bottom: 8vh !important;
 	box-sizing: border-box;
 }
