@@ -6,6 +6,7 @@ $(function() {
 	$('.wrapper').hide();
 	$('#addButton').hide();
 	$('#content').hide();
+	$('#tabloid').hide();
 
 	setTimeout(function() {
 		$('#splash').hide();
@@ -74,14 +75,19 @@ $(function() {
 	});
 	
 	// Click any project
-	$(".brick").click(function() {
-
+	$("#brickwall").click(function() {
 		$('#tabloid').show();
 
 		$('#brickwall').hide();
 		$('.wrapper').hide();
 		$('#content').hide();
 		$('#addButton').hide();
+	});
+
+	//On clicking the like update the db
+	$( "#like" ).click(function(){
+		var pname = $(".project-name").text();
+		socket.emit("incVote",pname);
 	});
 
 	//must add a add vote button

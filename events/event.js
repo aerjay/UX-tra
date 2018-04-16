@@ -64,7 +64,7 @@ module.exports = function(io){
         // do: 
         // ().pcomment.body -- comment
         // ().pcomment.commenter 
-        socket.io('addComment', function(proj){
+        socket.on('addComment', function(proj){
             var query = {'pname': proj.pname}; 
             User.findOne(query, function(err, doc){
                 if (err) { 	
