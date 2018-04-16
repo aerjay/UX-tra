@@ -4,6 +4,7 @@ $(function() {
 
 	// Init
 	$('.wrapper').hide();
+	$('#tabloid').hide();
 	$('#addButton').hide();
 	$('#content').hide();
 	$('#tabloid').hide();
@@ -74,8 +75,12 @@ $(function() {
 		$('#tabloid').hide();
 	});
 	
-	// Click any project
-	$("#brickwall").click(function() {
+	// Click any project ??
+	$('#brickwall, .wrapper').on('click', '.brick', function(event) {
+
+		// Shows the stuff, so we gotta get the data of the clicked project
+		// Then shove that data into the elements somewhere I can do that -William
+
 		$('#tabloid').show();
 
 		$('#brickwall').hide();
@@ -84,6 +89,14 @@ $(function() {
 		$('#addButton').hide();
 	});
 
+	$('#corner-btn').click(function() {
+		if (active == 'project') {
+			$('.wrapper').show();
+			$('#brickwall').hide();
+		} else {
+			$('#brickwall').show();
+			$('.wrapper').hide();
+		}
 	//On clicking the like update the db
 	$( "#like" ).click(function(){
 		var pname = $(".project-name").text();
@@ -93,6 +106,16 @@ $(function() {
 	//must add a add vote button
 	//where it will emit 'incVote' (which takes the project name as an arg) to the server to increment the vote 
 
+		$("#addButton").hide();
+		$("#content").hide();
+		$('#tabloid').hide();
+	});
+
+	// Updates project data in the project view
+	socket.on('makeTabloid', function() {
+
+	});
+	
 	// Update dashboard with projects
 	socket.on('updateDash', function(data){
 		console.log(data.data.length);

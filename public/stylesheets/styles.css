@@ -881,11 +881,13 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 
 #tabloid * {
 	margin-bottom: 32px;
+	display: block;
 }
 
 .project-name {
 	text-align: center;
 	text-decoration: underline;
+	font-size: 2.4em;
 }
 
 .project-img {
@@ -896,25 +898,43 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 
 .project-info {
 	max-width: 60%;
-	margin: auto;
+	margin: 0 auto;
+	text-align: center;
+	padding: 8px 32px;
+	font-size: 1.2em;
+}
+
+.project-info:after {
+	content: " ";
+	clear: both;
+	display: block;
 }
 
 .project-info-item {
+	float: left;
+	margin: 0 4px;	
+	display: inline-block;
+}
+
+.like-btn {
 	float: right;
-	margin: 4px 8px;
+	font-size: 0.9em;
+	text-transform: none;
 }
 
 .project-desc {
 	max-width: 60%;
 	line-height: 2.2;
 	margin: auto;
+	font-size: 1.2em;
 }
 
-.corner-btn {
+#corner-btn {
 	position: absolute;
-	top: 16px;
-	right: 16px;
-	font-size: 2em;
+	top: 24px;
+	right: 32px;
+	font-size: 2.4em;
+	padding: 4px 16px;
 }
 
 #brickwall, #content, .wrapper, #tabloid {
