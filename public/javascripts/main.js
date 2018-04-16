@@ -75,7 +75,7 @@ $(function() {
 		$('#tabloid').hide();
 	});
 	
-	// Click any project ??
+	// Click any project and this shows up
 	$('#brickwall, .wrapper').on('click', '.brick', function(event) {
 
 		// Gets the project name of the clicked brick and sends it to server to get proj items
@@ -94,6 +94,7 @@ $(function() {
 		$('#addButton').hide();
 	});
 
+	// Exit button for tabloid view
 	$('#corner-btn').click(function() {
 		if (active == 'project') {
 			$('.wrapper').show();
@@ -110,14 +111,16 @@ $(function() {
 
 	//On clicking the like update the db
 	$( "#like" ).click(function(){
-		var pname = $(".project-name").text();
+		var pname = $("#tabloid .project-name").text();
 		socket.emit("incVote",pname);
 		$('#like-sum').text((parseInt($('#like-sum').text().split(" ")[0]) + 1) + " others like this project!");
+		
+		// Ingenius fix for preventing like spamming
+		$("#like").css("pointer-events", "none");
 	});
 
 	// Updates project data in the project view
 	socket.on('makeTabloid', function(proj) {
-		console.log(proj);
 		$('#proj-creator').text(proj.auth);
 		$('#tabloid img').attr('src', proj.buff);
 		$('#tabloid .project-desc').text(proj.des);
@@ -127,7 +130,7 @@ $(function() {
 	
 	// Update dashboard with projects
 	socket.on('updateDash', function(data){
-		console.log(data.data.length);
+		// console.log(data.data.length);
 		 if (data.data.length > 0) {
 			 $('#brickwall').empty();
 			for (let proj of data.data) {
@@ -138,13 +141,16 @@ $(function() {
 
 	// Update user with projects
 	socket.on('updateUser', function(data) {
-		console.log(data.data.length);
+		// console.log(data.data.length);
 		if (data.data.length > 0) {
 			$('.wrapper').empty();
 			for (let proj of data.data) {
 				updateView('.wrapper', proj);
 			}
 		}
+
+		// Allows button press for like button if disabled
+		$("#like").css("pointer-events", "auto");
 	});
 
 	socket.on('addProj', function(proj) {
