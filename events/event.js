@@ -89,7 +89,8 @@ module.exports = function(io){
                 }
                 //update that certain client
                 socket.emit('makeTabloid', {proj: doc.pname, buff: doc.pdata, des: doc.pdes, auth: doc.username, 
-                    vote: doc.pvote, comment: doc.pcomment.body, commenter: doc.pcomment.commenter})
+                    vote: doc.pvote, comment: doc.pcomment.body, commenter: doc.pcomment.commenter});
+                return updateWho(io);
             });
         });
 
