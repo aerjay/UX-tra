@@ -97,18 +97,15 @@ $(function() {
 			$('#brickwall').show();
 			$('.wrapper').hide();
 		}
+		$("#addButton").hide();
+		$("#content").hide();
+		$('#tabloid').hide();
+	});
+
 	//On clicking the like update the db
 	$( "#like" ).click(function(){
 		var pname = $(".project-name").text();
 		socket.emit("incVote",pname);
-	});
-
-	//must add a add vote button
-	//where it will emit 'incVote' (which takes the project name as an arg) to the server to increment the vote 
-
-		$("#addButton").hide();
-		$("#content").hide();
-		$('#tabloid').hide();
 	});
 
 	// Updates project data in the project view
