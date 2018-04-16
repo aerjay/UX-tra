@@ -82,6 +82,8 @@ $(function() {
 		// Then shove that data into the elements somewhere I can do that -William
 
 		$('#tabloid').show();
+		//sending the project name
+		socket.emit('getProj',$('<h3>').text());
 
 		$('#brickwall').hide();
 		$('.wrapper').hide();

@@ -43,6 +43,7 @@ module.exports = function(io){
 
         // Increment the vote of a project
         socket.on('incVote', function(pname){
+            console.log(pname);
             var query = {'pname': pname}; 
             User.findOne(query, function(err, doc){
                 if (err) { 	
@@ -76,6 +77,19 @@ module.exports = function(io){
             });
             //update everyone
             updateWho(io);
+        });
+
+        socket.on('getProj', function(pname){
+            console.log(pname);
+            var query = {'pname': pname}; 
+            User.findOne(query, function(err, doc){
+                if (err) { 	
+                    return next(err); 
+                }
+                //update that certain client
+                socket.emit('makeTabloid', {proj: doc.pname, buff: doc.pdata, des: doc.pdes, auth: doc.username, 
+                    vote: doc.pvote, comment: doc.pcomment.body, commenter: doc.pcomment.commenter})
+            });
         });
 
         function updateWho(i){
