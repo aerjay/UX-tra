@@ -78,8 +78,8 @@ $(function() {
 	// Click any project ??
 	$('#brickwall, .wrapper').on('click', '.brick', function(event) {
 
-		// Shows the stuff, so we gotta get the data of the clicked project
-		// Then shove that data into the elements somewhere I can do that -William
+		// update the stuff here
+		// 
 
 		$('#tabloid').show();
 		//sending the project name
@@ -99,6 +99,7 @@ $(function() {
 			$('#brickwall').show();
 			$('.wrapper').hide();
 		}
+
 		$("#addButton").hide();
 		$("#content").hide();
 		$('#tabloid').hide();
@@ -108,6 +109,7 @@ $(function() {
 	$( "#like" ).click(function(){
 		var pname = $(".project-name").text();
 		socket.emit("incVote",pname);
+		$('#like-sum').text((parseInt($('#like-sum').text().split(" ")[0]) + 1) + " others like this project!");
 	});
 
 	// Updates project data in the project view

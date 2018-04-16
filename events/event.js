@@ -52,6 +52,7 @@ module.exports = function(io){
                 doc.pvote = doc.pvote + 1;
                 doc.save();
             });
+
             //update everyone
             updateWho(io);
         });

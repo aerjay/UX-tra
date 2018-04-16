@@ -912,14 +912,14 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 
 .project-info-item {
 	float: left;
-	margin: 0 4px;	
+	margin: 8px 16px;	
 	display: inline-block;
 }
 
-.like-btn {
-	float: right;
-	font-size: 0.9em;
+#like {
+	font-size: 1em;
 	text-transform: none;
+	background-color: #f25c72;
 }
 
 .project-desc {
@@ -935,6 +935,25 @@ html, body, .row, #section, #sidebar, .navbar-nav, #errorPage {
 	right: 32px;
 	font-size: 2.4em;
 	padding: 4px 16px;
+}
+
+@media only screen and (max-width: 576px) {
+	#tabloid {
+		padding-top: 8vh;
+	}
+
+	#corner-btn {
+		top: 12px;
+		right: 16px;
+	}
+
+	.project-img, .project-desc, .project-info {
+		max-width: 88%;
+	}
+
+	#like-sum {
+		font-size: 0.7em;
+	}
 }
 
 #brickwall, #content, .wrapper, #tabloid {
