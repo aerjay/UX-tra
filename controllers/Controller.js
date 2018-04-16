@@ -70,7 +70,7 @@ Controller.doRegister = function(req, res) {
 		});
 		//Authenticate the user using local strategy
 		passport.authenticate('local')(req, res, function () {
-			req.flash("succ", "Sign Up Success");
+			req.flash("succ", "Sign Up Success, Please Check your Email");
 			res.redirect('/'); 
 		});
 	});
