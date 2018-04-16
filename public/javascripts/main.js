@@ -78,12 +78,15 @@ $(function() {
 	// Click any project ??
 	$('#brickwall, .wrapper').on('click', '.brick', function(event) {
 
-		// update the stuff here
-		// 
+		// Gets the project name of the clicked brick and sends it to server to get proj items
+		socket.emit('getProj', $(this).children('.dash-text-wrapper').children('h3').text());
+
+		$('#splash').show();
+		setTimeout(function() {
+			$('#splash').hide();
+		}, 600);
 
 		$('#tabloid').show();
-		//sending the project name
-		socket.emit('getProj',$('<h3>').text());
 
 		$('#brickwall').hide();
 		$('.wrapper').hide();
@@ -113,8 +116,13 @@ $(function() {
 	});
 
 	// Updates project data in the project view
-	socket.on('makeTabloid', function() {
-
+	socket.on('makeTabloid', function(proj) {
+		console.log(proj);
+		$('#proj-creator').text(proj.auth);
+		$('#tabloid img').attr('src', proj.buff);
+		$('#tabloid .project-desc').text(proj.des);
+		$('#tabloid .project-name').text(proj.proj);
+		$('#like-sum').text(proj.vote + " others like this project!");
 	});
 	
 	// Update dashboard with projects
