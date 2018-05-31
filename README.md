@@ -1,3 +1,1 @@
-# UX-tra
-SENG 513 project
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://uxtra.herokuapp.com/)
+# UX-tra [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://uxtra.herokuapp.com/)
